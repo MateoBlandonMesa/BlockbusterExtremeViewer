@@ -8,9 +8,7 @@ package blockbusterextremeviewer.classes;
  *
  * @author blandonm
  */
-public class Movie {
-    
-    private String idMovie;
+public class Movie extends Product {
     
     private String title;
     
@@ -19,8 +17,6 @@ public class Movie {
     private int year;
         
     private String format;
-    
-    private double price;
     
     private String director;
     
@@ -82,25 +78,6 @@ public class Movie {
      */
     public void setDirector(String director) {
         this.director = director;
-    }
-
-
-    /**
-     * Get the value of price
-     *
-     * @return the value of price
-     */
-    public double getPrice() {
-        return price;
-    }
-
-    /**
-     * Set the value of price
-     *
-     * @param price new value of price
-     */
-    public void setPrice(double price) {
-        this.price = price;
     }
 
 
@@ -180,22 +157,14 @@ public class Movie {
     }
 
 
-    /**
-     * Get the value of idMovie
-     *
-     * @return the value of idMovie
-     */
-    public String getIdMovie() {
-        return idMovie;
+    @Override
+    public void toRent() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    /**
-     * Set the value of idMovie
-     *
-     * @param idMovie new value of idMovie
-     */
-    public void setIdMovie(String idMovie) {
-        this.idMovie = idMovie;
+    @Override
+    public void toSell() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

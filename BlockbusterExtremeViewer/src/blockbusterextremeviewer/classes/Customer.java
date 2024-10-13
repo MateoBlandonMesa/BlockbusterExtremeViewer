@@ -10,11 +10,7 @@ import java.util.ArrayList;
  *
  * @author blandonm
  */
-public class Customer {
-    
-    private String idCustomer;
-    
-    private String name;
+public class Customer extends User {
     
     private String lastName;
     
@@ -118,44 +114,6 @@ public class Customer {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-
-    /**
-     * Get the value of name
-     *
-     * @return the value of name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the value of name
-     *
-     * @param name new value of name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    /**
-     * Get the value of idCustomer
-     *
-     * @return the value of idCustomer
-     */
-    public String getIdCustomer() {
-        return idCustomer;
-    }
-
-    /**
-     * Set the value of idCustomer
-     *
-     * @param idCustomer new value of idCustomer
-     */
-    public void setIdCustomer(String idCustomer) {
-        this.idCustomer = idCustomer;
     }
 
 }
