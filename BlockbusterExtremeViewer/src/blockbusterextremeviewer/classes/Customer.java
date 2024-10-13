@@ -4,10 +4,158 @@
  */
 package blockbusterextremeviewer.classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author blandonm
  */
 public class Customer {
     
+    private String idCustomer;
+    
+    private String name;
+    
+    private String lastName;
+    
+    private String email;
+    
+    private int age;
+    
+    private String contactNumber;
+    
+    private ArrayList<Rental> rentedMovies;
+
+    /**
+     * Get the value of rentedMovies
+     *
+     * @return the value of rentedMovies
+     */
+    public ArrayList<Rental> getRentedMovies() {
+        return rentedMovies;
+    }
+
+    /**
+     * Set the value of rentedMovies
+     *
+     * @param rentedMovies new value of rentedMovies
+     */
+    public void setRentedMovies(ArrayList<Rental> rentedMovies) {
+        this.rentedMovies = rentedMovies;
+    }
+
+
+    /**
+     * Get the value of contactNumber
+     *
+     * @return the value of contactNumber
+     */
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    /**
+     * Set the value of contactNumber
+     *
+     * @param contactNumber new value of contactNumber
+     */
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+
+    /**
+     * Get the value of age
+     *
+     * @return the value of age
+     */
+    public int getAge() {
+        return age;
+    }
+
+    /**
+     * Set the value of age
+     *
+     * @param age new value of age
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+    /**
+     * Get the value of email
+     *
+     * @return the value of email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @param email new value of email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    /**
+     * Get the value of lastName
+     *
+     * @return the value of lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Set the value of lastName
+     *
+     * @param lastName new value of lastName
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param name new value of name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    /**
+     * Get the value of idCustomer
+     *
+     * @return the value of idCustomer
+     */
+    public String getIdCustomer() {
+        return idCustomer;
+    }
+
+    /**
+     * Set the value of idCustomer
+     *
+     * @param idCustomer new value of idCustomer
+     */
+    public void setIdCustomer(String idCustomer) {
+        this.idCustomer = idCustomer;
+    }
+
 }
