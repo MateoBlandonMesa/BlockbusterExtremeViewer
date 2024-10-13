@@ -13,10 +13,6 @@ public abstract class Product {
     private String id;
     
     private double price;
-    
-    public abstract void toRent();
-    
-    public abstract void toSell();
 
     /**
      * Get the value of price

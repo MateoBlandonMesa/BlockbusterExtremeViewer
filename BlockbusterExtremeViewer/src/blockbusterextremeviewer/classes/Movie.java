@@ -4,11 +4,13 @@
  */
 package blockbusterextremeviewer.classes;
 
+import blockbusterextremeviewer.interfaces.IRentProduct;
+
 /**
  *
  * @author blandonm
  */
-public class Movie extends Product {
+public class Movie extends Product implements IRentProduct {
     
     private String title;
     
@@ -156,14 +158,8 @@ public class Movie extends Product {
         this.title = title;
     }
 
-
     @Override
     public void toRent() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void toSell() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -8,6 +8,8 @@ package blockbusterextremeviewer.interfaces;
  *
  * @author blandonm
  */
-public interface ITest {
+public interface ISaleProduct {
+    
+    public abstract void toSell();
     
 }
