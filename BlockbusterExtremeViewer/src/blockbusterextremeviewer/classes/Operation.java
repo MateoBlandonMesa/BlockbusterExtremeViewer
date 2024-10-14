@@ -4,6 +4,7 @@
  */
 package blockbusterextremeviewer.classes;
 
+import blockbusterextremeviewer.interfaces.IOperation;
 import blockbusterextremeviewer.interfaces.IDataStorage;
 import blockbusterextremeviewer.interfaces.IExportableToCsv;
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ import java.util.UUID;
  *
  * @author blandonm
  */
-public final class Operation implements IDataStorage {
+public final class Operation implements IDataStorage, IOperation {
     
     private ArrayList<Movie> movies;
     
@@ -202,6 +203,7 @@ public final class Operation implements IDataStorage {
         this.movies = movies;
     }
     
+    @Override
     public void createCustomer(String id, String name, String lastName, String email, int age, String contactNumber ){
         Customer newCustomer = new Customer(id, name, lastName, email, age, contactNumber);
         saveDataCsv(newCustomer, this.customersTableFilePath, this.separatorCsv);
@@ -209,6 +211,7 @@ public final class Operation implements IDataStorage {
         System.out.println(String.format("Customer created: %s %s (%s)", name, lastName, id));
     }
     
+    @Override
     public void createMovie(double price, String title, String genre, int year, String format, String director, String cast, String language){
         String id = UUID.randomUUID().toString();
         Movie newMovie = new Movie(id, price, title, genre, year, format, director, cast, language);
@@ -217,6 +220,7 @@ public final class Operation implements IDataStorage {
         System.out.println(String.format("Movie created: %s %s (%s)", title, genre, id));
     }
     
+    @Override
     public void createRental(String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned){
         String id = UUID.randomUUID().toString();
         Rental newRental = new Rental(id, idMovie, idCustomer, returnDate, rentalDate, totalCost, movieReturned);
