@@ -8,8 +8,8 @@ package blockbusterextremeviewer.interfaces;
  *
  * @author blandonm
  */
-public interface ISaleProduct {
+public interface IDataStorage {
     
-    void toSell();
+    void saveDataCsv(IExportableToCsv object, String dataStorageFilePath, String separatorCsv);
     
 }

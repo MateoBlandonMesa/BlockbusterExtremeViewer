@@ -4,13 +4,13 @@
  */
 package blockbusterextremeviewer.classes;
 
-import java.util.ArrayList;
+import blockbusterextremeviewer.interfaces.IExportableToCsv;
 
 /**
  *
  * @author blandonm
  */
-public class Customer extends User {
+public class Customer extends User implements IExportableToCsv {
     
     private String lastName;
     
@@ -19,25 +19,13 @@ public class Customer extends User {
     private int age;
     
     private String contactNumber;
-    
-    private ArrayList<Rental> rentedMovies;
 
-    /**
-     * Get the value of rentedMovies
-     *
-     * @return the value of rentedMovies
-     */
-    public ArrayList<Rental> getRentedMovies() {
-        return rentedMovies;
-    }
-
-    /**
-     * Set the value of rentedMovies
-     *
-     * @param rentedMovies new value of rentedMovies
-     */
-    public void setRentedMovies(ArrayList<Rental> rentedMovies) {
-        this.rentedMovies = rentedMovies;
+    public Customer(String id, String name, String lastName, String email, int age, String contactNumber) {
+        super(id, name);
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+        this.contactNumber = contactNumber;
     }
 
 
@@ -114,6 +102,18 @@ public class Customer extends User {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    
+    @Override
+    public String toCsv(String separatorCsv) {
+        return String.format("%s%s%s%s%s%s%s%s%s%s%s%s", 
+                this.getId(), separatorCsv, 
+                this.getName(), separatorCsv, 
+                this.getLastName(), separatorCsv, 
+                this.getEmail(), separatorCsv,
+                this.getAge(), separatorCsv,
+                this.getContactNumber(), separatorCsv);
     }
 
 }

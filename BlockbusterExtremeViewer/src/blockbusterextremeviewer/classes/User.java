@@ -14,6 +14,12 @@ public abstract class User {
     
     private String name;
 
+    public User(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+
     /**
      * Get the value of name
      *

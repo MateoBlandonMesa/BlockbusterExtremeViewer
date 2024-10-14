@@ -10,6 +10,6 @@ package blockbusterextremeviewer.interfaces;
  */
 public interface IRentProduct {
     
-    public abstract void toRent();
+    void toRent();
     
 }
