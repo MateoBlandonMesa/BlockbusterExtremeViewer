@@ -26,7 +26,7 @@ public class Operation implements IDataStorage {
     
     private String separatorCsv;
     
-    private String dataStorageFilePath;
+    private String customersTableFilePath;
     
     private String rootFolder;
     
@@ -36,7 +36,7 @@ public class Operation implements IDataStorage {
         this.rentals = new ArrayList<>();
         this.separatorCsv = ";";
         this.rootFolder = new File("").getAbsolutePath();
-        this.dataStorageFilePath = this.rootFolder + "/datastorage";
+        this.customersTableFilePath = this.rootFolder + "/datastorage/customersTable.csv";
     }
 
     /**
@@ -59,21 +59,21 @@ public class Operation implements IDataStorage {
 
 
     /**
-     * Get the value of dataStorageFilePath
+     * Get the value of customersTableFilePath
      *
-     * @return the value of dataStorageFilePath
+     * @return the value of customersTableFilePath
      */
-    public String getdataStorageFilePath() {
-        return dataStorageFilePath;
+    public String getcustomersTableFilePath() {
+        return customersTableFilePath;
     }
 
     /**
-     * Set the value of dataStorageFilePath
+     * Set the value of customersTableFilePath
      *
-     * @param dataStorageFilePath new value of dataStorageFilePath
+     * @param customersTableFilePath new value of customersTableFilePath
      */
-    public void setdataStorageFilePath(String dataStorageFilePath) {
-        this.dataStorageFilePath = dataStorageFilePath;
+    public void setcustomersTableFilePath(String customersTableFilePath) {
+        this.customersTableFilePath = customersTableFilePath;
     }
 
 
@@ -155,27 +155,26 @@ public class Operation implements IDataStorage {
     public void createCustomer(String name, String lastName, String email, int age, String contactNumber ){
         String id = UUID.randomUUID().toString();
         Customer newCustomer = new Customer(id, name, lastName, email, age, contactNumber);
-        saveDataCsv(newCustomer, this.dataStorageFilePath, this.separatorCsv);
+        saveDataCsv(newCustomer, this.customersTableFilePath, this.separatorCsv);
         this.customers.add(newCustomer);
         System.out.println(String.format("Customer created: %s %s (%s)", name, lastName, id));
     }
 
     @Override
-    public void saveDataCsv(IExportableToCsv object, String dataStorageFilePath, String separatorCsv) {
-        try {
-            File file = new File(dataStorageFilePath);
-            File folder = file.getParentFile();
+    public void saveDataCsv(IExportableToCsv object, String customersTableFilePath, String separatorCsv) {
+        File file = new File(customersTableFilePath);
+        File folder = file.getParentFile();
             
-            if (folder != null && !folder.exists()) {
-                folder.mkdirs();
-            }
-            
-            FileWriter writer = new FileWriter(dataStorageFilePath, true);
-            writer.append(object.toCsv(separatorCsv)).append("\n");
-            System.out.println(String.format("Data saved in %s", dataStorageFilePath));
+        if (folder != null && !folder.exists()) {
+            folder.mkdirs();
+        }
+        try (FileWriter writer = new FileWriter(customersTableFilePath, true)) {
+            String stringToSave = object.toCsv(separatorCsv);
+            writer.append(stringToSave).append("\n");
+            System.out.println(String.format("Data saved in %s", customersTableFilePath));
         }
         catch (IOException ex) {
-            System.err.println(String.format("Error saving data in %s: %s", dataStorageFilePath, ex.getMessage()));
+            System.err.println(String.format("Error saving data in %s: %s", customersTableFilePath, ex.getMessage()));
         }
     }
 

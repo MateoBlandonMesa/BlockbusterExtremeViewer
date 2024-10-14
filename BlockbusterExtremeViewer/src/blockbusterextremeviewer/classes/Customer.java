@@ -107,13 +107,14 @@ public class Customer extends User implements IExportableToCsv {
     
     @Override
     public String toCsv(String separatorCsv) {
-        return String.format("%s%s%s%s%s%s%s%s%s%s%s%s", 
-                this.getId(), separatorCsv, 
-                this.getName(), separatorCsv, 
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s", 
+                this.getId(), separatorCsv,
+                this.getName(), separatorCsv,
                 this.getLastName(), separatorCsv, 
                 this.getEmail(), separatorCsv,
                 this.getAge(), separatorCsv,
-                this.getContactNumber(), separatorCsv);
+                this.getContactNumber());
+        return stringToSave;
     }
 
 }

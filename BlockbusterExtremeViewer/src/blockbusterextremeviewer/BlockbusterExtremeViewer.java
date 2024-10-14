@@ -4,6 +4,8 @@
  */
 package blockbusterextremeviewer;
 
+import blockbusterextremeviewer.classes.Operation;
+
 /**
  *
  * @author blandonm
@@ -14,7 +16,12 @@ public class BlockbusterExtremeViewer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        Operation blockbusterOperation = new Operation();
+        
+        blockbusterOperation.createCustomer("Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
+        
+        System.out.println("Operation finished!");
     }
     
 }
