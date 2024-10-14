@@ -19,7 +19,8 @@ public class BlockbusterExtremeViewer {
         
         Operation blockbusterOperation = new Operation();
         
-        blockbusterOperation.createCustomer("1010100101", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
+        blockbusterOperation.createCustomer("1010100102", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
+        blockbusterOperation.createMovie(4500.00, "Men in Black", "SciFy-Comedy", 1997, "DVD", "Barry Sonnenfeld", "Will Smith", "English");
         
         System.out.println("Operation finished!");
     }

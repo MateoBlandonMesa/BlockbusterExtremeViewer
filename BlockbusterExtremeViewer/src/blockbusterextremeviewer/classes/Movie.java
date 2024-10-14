@@ -4,13 +4,14 @@
  */
 package blockbusterextremeviewer.classes;
 
+import blockbusterextremeviewer.interfaces.IExportableToCsv;
 import blockbusterextremeviewer.interfaces.IRentProduct;
 
 /**
  *
  * @author blandonm
  */
-public class Movie extends Product implements IRentProduct {
+public class Movie extends Product implements IRentProduct, IExportableToCsv {
     
     private String title;
     
@@ -25,6 +26,18 @@ public class Movie extends Product implements IRentProduct {
     private String cast;
     
     private String language;
+
+    public Movie(String id, double price, String title, String genre, int year, String format, String director, String cast, String language) {
+        super(id, price);
+        this.title = title;
+        this.genre = genre;
+        this.year = year;
+        this.format = format;
+        this.director = director;
+        this.cast = cast;
+        this.language = language;
+    }
+    
 
     /**
      * Get the value of language
@@ -161,6 +174,21 @@ public class Movie extends Product implements IRentProduct {
     @Override
     public void toRent() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String toCsv(String separatorCsv) {
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", 
+                this.getId(), separatorCsv,
+                this.getPrice(), separatorCsv,
+                this.getTitle(), separatorCsv, 
+                this.getGenre(), separatorCsv,
+                this.getYear(), separatorCsv,
+                this.getFormat(), separatorCsv,
+                this.getDirector(), separatorCsv,
+                this.getCast(), separatorCsv,
+                this.getLanguage());
+        return stringToSave;
     }
 
 }

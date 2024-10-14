@@ -14,6 +14,12 @@ public abstract class Product {
     
     private double price;
 
+    public Product(String id, double price) {
+        this.id = id;
+        this.price = price;
+    }
+    
+
     /**
      * Get the value of price
      *
