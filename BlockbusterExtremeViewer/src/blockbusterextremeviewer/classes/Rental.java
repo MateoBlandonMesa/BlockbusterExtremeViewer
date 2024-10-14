@@ -4,19 +4,20 @@
  */
 package blockbusterextremeviewer.classes;
 
+import blockbusterextremeviewer.interfaces.IExportableToCsv;
 import java.time.LocalDate;
 
 /**
  *
  * @author blandonm
  */
-public class Rental {
+public class Rental implements IExportableToCsv {
     
-    private String idRental;
+    private String id;
     
-    private Movie rentedMovie;
+    private String idMovie;
     
-    private Customer rentCustomer;
+    private String idCustomer;
     
     private LocalDate returnDate;
     
@@ -25,6 +26,17 @@ public class Rental {
     private double totalCost;
     
     private boolean movieReturned;
+
+    public Rental(String id, String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned) {
+        this.id = id;
+        this.idMovie = idMovie;
+        this.idCustomer = idCustomer;
+        this.returnDate = returnDate;
+        this.rentalDate = rentalDate;
+        this.totalCost = totalCost;
+        this.movieReturned = movieReturned;
+    }
+    
 
     /**
      * Get the value of movieReturned
@@ -103,59 +115,72 @@ public class Rental {
 
 
     /**
-     * Get the value of rentCustomer
+     * Get the value of idCustomer
      *
-     * @return the value of rentCustomer
+     * @return the value of idCustomer
      */
-    public Customer getRentCustomer() {
-        return rentCustomer;
+    public String getIdCustomer() {
+        return idCustomer;
     }
 
     /**
-     * Set the value of rentCustomer
+     * Set the value of idCustomer
      *
-     * @param rentCustomer new value of rentCustomer
+     * @param idCustomer new value of idCustomer
      */
-    public void setRentCustomer(Customer rentCustomer) {
-        this.rentCustomer = rentCustomer;
-    }
-
-
-    /**
-     * Get the value of rentedMovie
-     *
-     * @return the value of rentedMovie
-     */
-    public Movie getRentedMovie() {
-        return rentedMovie;
-    }
-
-    /**
-     * Set the value of rentedMovie
-     *
-     * @param rentedMovie new value of rentedMovie
-     */
-    public void setRentedMovie(Movie rentedMovie) {
-        this.rentedMovie = rentedMovie;
+    public void setIdCustomer(String idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
 
     /**
-     * Get the value of idRental
+     * Get the value of idMovie
      *
-     * @return the value of idRental
+     * @return the value of idMovie
      */
-    public String getIdRental() {
-        return idRental;
+    public String getIdMovie() {
+        return idMovie;
     }
 
     /**
-     * Set the value of idRental
+     * Set the value of idMovie
      *
-     * @param idRental new value of idRental
+     * @param idMovie new value of idMovie
      */
-    public void setIdRental(String idRental) {
-        this.idRental = idRental;
+    public void setIdMovie(String idMovie) {
+        this.idMovie = idMovie;
+    }
+
+
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toCsv(String separatorCsv) {
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s", 
+                this.getId(), separatorCsv,
+                this.getIdMovie(), separatorCsv,
+                this.getIdCustomer(), separatorCsv, 
+                this.getreturnDate(), separatorCsv,
+                this.getRentalDate(), separatorCsv,
+                this.getTotalCost(), separatorCsv,
+                this.isMovieReturned());
+        return stringToSave;
     }
 
 }

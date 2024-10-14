@@ -9,6 +9,7 @@ import blockbusterextremeviewer.interfaces.IExportableToCsv;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -210,6 +211,14 @@ public class Operation implements IDataStorage {
         saveDataCsv(newMovie, this.moviesTableFilePath, this.separatorCsv);
         this.movies.add(newMovie);
         System.out.println(String.format("Movie created: %s %s (%s)", title, genre, id));
+    }
+    
+    public void createRental(String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned){
+        String id = UUID.randomUUID().toString();
+        Rental newRental = new Rental(id, idMovie, idCustomer, returnDate, rentalDate, totalCost, movieReturned);
+        saveDataCsv(newRental, this.rentalsTableFilePath, this.separatorCsv);
+        this.rentals.add(newRental);
+        System.out.println(String.format("Rental created: %s %s (%s)", idMovie, idCustomer, id));
     }
 
     @Override
