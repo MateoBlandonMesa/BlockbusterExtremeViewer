@@ -19,7 +19,7 @@ import java.util.UUID;
  *
  * @author blandonm
  */
-public class Operation implements IDataStorage {
+public final class Operation implements IDataStorage {
     
     private ArrayList<Movie> movies;
     
@@ -40,14 +40,14 @@ public class Operation implements IDataStorage {
     
     
     public Operation() {
-        this.movies = new ArrayList<>();
-        this.customers = new ArrayList<>();
-        this.rentals = new ArrayList<>();
         this.separatorCsv = ";";
         this.rootFolder = new File("").getAbsolutePath();
         this.customersTableFilePath = this.rootFolder + "/datastorage/customersTable.csv";
         this.moviesTableFilePath = this.rootFolder + "/datastorage/moviesTable.csv";
         this.rentalsTableFilePath = this.rootFolder + "/datastorage/rentalsTable.csv";
+        this.movies = this.loadDataCsv(this.moviesTableFilePath, this.separatorCsv, Movie.class);
+        this.customers = this.loadDataCsv(this.customersTableFilePath, this.separatorCsv, Customer.class);
+        this.rentals = this.loadDataCsv(this.rentalsTableFilePath, this.separatorCsv, Rental.class);
         
     }
 

@@ -24,20 +24,15 @@ public class BlockbusterExtremeViewer {
         
         Operation blockbusterOperation = new Operation();
         
-        //Set table files paths
-        String customersTableFilePath = blockbusterOperation.getCustomersTableFilePath();
-        String moviesTableFilePath = blockbusterOperation.getMoviesTableFilePath();
-        String rentalsTableFilePath = blockbusterOperation.getRentalsTableFilePath();
-        String separatorCsv = blockbusterOperation.getSeparatorCsv();
-        
         //Load previous records
-        ArrayList<Customer> customers = blockbusterOperation.loadDataCsv(customersTableFilePath, separatorCsv, Customer.class);
-        ArrayList<Movie> movies = blockbusterOperation.loadDataCsv(moviesTableFilePath, separatorCsv, Movie.class);
-        ArrayList<Rental> rentals = blockbusterOperation.loadDataCsv(rentalsTableFilePath, separatorCsv, Rental.class);
+        //ArrayList<Customer> customers = blockbusterOperation.loadDataCsv(customersTableFilePath, separatorCsv, Customer.class);
+        ArrayList<Customer> customers = blockbusterOperation.getCustomers();
+        ArrayList<Movie> movies = blockbusterOperation.getMovies();
+        ArrayList<Rental> rentals = blockbusterOperation.getRentals();
         
         blockbusterOperation.createCustomer("1010100102", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
-        blockbusterOperation.createMovie(4500.00, "Men in Black", "SciFy-Comedy", 1997, "DVD", "Barry Sonnenfeld", "Will Smith", "English");
-        blockbusterOperation.createRental("id Men in Black", "1010100102", LocalDate.now(), LocalDate.now().plusDays(7), 4500.00, false);
+        blockbusterOperation.createMovie(5500.00, "Men in Black 2", "SciFy-Comedy", 1997, "DVD", "Barry Sonnenfeld", "Will Smith", "English");
+        blockbusterOperation.createRental("id Men in Black 2", "1010100103", LocalDate.now(), LocalDate.now().plusDays(7), 4500.00, false);
         
         System.out.println("Operation finished!");
     }
