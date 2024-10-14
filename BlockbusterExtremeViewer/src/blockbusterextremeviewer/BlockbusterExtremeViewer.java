@@ -25,7 +25,6 @@ public class BlockbusterExtremeViewer {
         Operation blockbusterOperation = new Operation();
         
         //Load previous records
-        //ArrayList<Customer> customers = blockbusterOperation.loadDataCsv(customersTableFilePath, separatorCsv, Customer.class);
         ArrayList<Customer> customers = blockbusterOperation.getCustomers();
         ArrayList<Movie> movies = blockbusterOperation.getMovies();
         ArrayList<Rental> rentals = blockbusterOperation.getRentals();
