@@ -19,7 +19,7 @@ public class BlockbusterExtremeViewer {
         
         Operation blockbusterOperation = new Operation();
         
-        blockbusterOperation.createCustomer("Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
+        blockbusterOperation.createCustomer("1010100101", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
         
         System.out.println("Operation finished!");
     }

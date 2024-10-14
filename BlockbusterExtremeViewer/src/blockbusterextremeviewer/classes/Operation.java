@@ -152,8 +152,7 @@ public class Operation implements IDataStorage {
         this.availableMovies = availableMovies;
     }
     
-    public void createCustomer(String name, String lastName, String email, int age, String contactNumber ){
-        String id = UUID.randomUUID().toString();
+    public void createCustomer(String id, String name, String lastName, String email, int age, String contactNumber ){
         Customer newCustomer = new Customer(id, name, lastName, email, age, contactNumber);
         saveDataCsv(newCustomer, this.customersTableFilePath, this.separatorCsv);
         this.customers.add(newCustomer);
