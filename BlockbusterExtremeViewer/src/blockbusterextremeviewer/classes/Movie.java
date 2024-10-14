@@ -27,6 +27,19 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
     
     private String language;
 
+    public Movie() {
+        super();
+        this.title = null;
+        this.genre = null;
+        this.year = 0;
+        this.format = null;
+        this.director = null;
+        this.cast = null;
+        this.language = null;
+    }
+
+    
+    
     public Movie(String id, double price, String title, String genre, int year, String format, String director, String cast, String language) {
         super(id, price);
         this.title = title;
@@ -189,6 +202,11 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
                 this.getCast(), separatorCsv,
                 this.getLanguage());
         return stringToSave;
+    }
+
+    @Override
+    public IExportableToCsv parseCsvLineProperties(String[] properties) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

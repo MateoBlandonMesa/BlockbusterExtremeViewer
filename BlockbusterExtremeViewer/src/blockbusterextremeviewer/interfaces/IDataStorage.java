@@ -4,6 +4,8 @@
  */
 package blockbusterextremeviewer.interfaces;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author blandonm
@@ -11,5 +13,7 @@ package blockbusterextremeviewer.interfaces;
 public interface IDataStorage {
     
     void saveDataCsv(IExportableToCsv object, String dataStorageFilePath, String separatorCsv);
+    
+    <T extends IExportableToCsv> ArrayList<T> loadDataCsv(String dataStorageFilePath, String separatorCsv, Class<T> objectClass);
     
 }

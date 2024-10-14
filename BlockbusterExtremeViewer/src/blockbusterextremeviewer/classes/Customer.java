@@ -20,6 +20,16 @@ public class Customer extends User implements IExportableToCsv {
     
     private String contactNumber;
 
+    public Customer() {
+        super();
+        this.lastName = null;
+        this.email = null;
+        this.age = 0;
+        this.contactNumber = null;
+    }
+    
+
+    
     public Customer(String id, String name, String lastName, String email, int age, String contactNumber) {
         super(id, name);
         this.lastName = lastName;
@@ -115,6 +125,29 @@ public class Customer extends User implements IExportableToCsv {
                 this.getAge(), separatorCsv,
                 this.getContactNumber());
         return stringToSave;
+    }
+
+    @Override
+    public IExportableToCsv parseCsvLineProperties(String[] properties) {
+        int ageProperty = 0;
+        
+        try{
+            ageProperty = Integer.parseInt(properties[4]);
+        }
+        catch (NumberFormatException ex){
+            System.err.println(String.format("Error parsing %s: %s", ageProperty, ex.getMessage()));
+            ageProperty = 0;
+        }
+        
+        this.setId(properties[0]);
+        this.setName(properties[1]);
+        this.setLastName(properties[2]);
+        this.setEmail(properties[3]);
+        this.setAge(ageProperty);
+        this.setContactNumber(properties[5]);
+        
+        //Customer customer = new Customer(properties[0], properties[1], properties[2], properties[3], ageProperty, properties[5]);
+        return this;
     }
 
 }

@@ -4,8 +4,10 @@
  */
 package blockbusterextremeviewer;
 
+import blockbusterextremeviewer.classes.Customer;
 import blockbusterextremeviewer.classes.Operation;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +21,13 @@ public class BlockbusterExtremeViewer {
     public static void main(String[] args) {
         
         Operation blockbusterOperation = new Operation();
+        
+        String customersTableFilePath = blockbusterOperation.getCustomersTableFilePath();
+        String moviesTableFilePath = blockbusterOperation.getMoviesTableFilePath();
+        String rentalsTableFilePath = blockbusterOperation.getRentalsTableFilePath();
+        String separatorCsv = blockbusterOperation.getSeparatorCsv();
+        
+        ArrayList<Customer> customers = blockbusterOperation.loadDataCsv(customersTableFilePath, separatorCsv, Customer.class);
         
         blockbusterOperation.createCustomer("1010100102", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
         blockbusterOperation.createMovie(4500.00, "Men in Black", "SciFy-Comedy", 1997, "DVD", "Barry Sonnenfeld", "Will Smith", "English");

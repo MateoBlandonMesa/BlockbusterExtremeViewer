@@ -14,6 +14,11 @@ public abstract class Product {
     
     private double price;
 
+    public Product() {
+        this.id = null;
+        this.price = 0.00;
+    }
+
     public Product(String id, double price) {
         this.id = id;
         this.price = price;

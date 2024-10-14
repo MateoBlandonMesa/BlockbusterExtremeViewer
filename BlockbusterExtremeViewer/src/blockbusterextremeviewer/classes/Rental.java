@@ -27,6 +27,16 @@ public class Rental implements IExportableToCsv {
     
     private boolean movieReturned;
 
+    public Rental() {
+        this.id = null;
+        this.idMovie = null;
+        this.idCustomer = null;
+        this.returnDate = null;
+        this.rentalDate = null;
+        this.totalCost = 0.00;
+        this.movieReturned = false;
+    }
+
     public Rental(String id, String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned) {
         this.id = id;
         this.idMovie = idMovie;
@@ -181,6 +191,11 @@ public class Rental implements IExportableToCsv {
                 this.getTotalCost(), separatorCsv,
                 this.isMovieReturned());
         return stringToSave;
+    }
+
+    @Override
+    public IExportableToCsv parseCsvLineProperties(String[] properties) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

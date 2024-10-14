@@ -6,7 +6,9 @@ package blockbusterextremeviewer.classes;
 
 import blockbusterextremeviewer.interfaces.IDataStorage;
 import blockbusterextremeviewer.interfaces.IExportableToCsv;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,6 +37,8 @@ public class Operation implements IDataStorage {
     
     private String rentalsTableFilePath;
     
+    
+    
     public Operation() {
         this.movies = new ArrayList<>();
         this.customers = new ArrayList<>();
@@ -43,7 +47,7 @@ public class Operation implements IDataStorage {
         this.rootFolder = new File("").getAbsolutePath();
         this.customersTableFilePath = this.rootFolder + "/datastorage/customersTable.csv";
         this.moviesTableFilePath = this.rootFolder + "/datastorage/moviesTable.csv";
-        this.rentalsTableFilePath = this.rootFolder + "/datastorage/tentalsTable.csv";
+        this.rentalsTableFilePath = this.rootFolder + "/datastorage/rentalsTable.csv";
         
     }
 
@@ -109,7 +113,7 @@ public class Operation implements IDataStorage {
      *
      * @return the value of customersTableFilePath
      */
-    public String getcustomersTableFilePath() {
+    public String getCustomersTableFilePath() {
         return customersTableFilePath;
     }
 
@@ -118,7 +122,7 @@ public class Operation implements IDataStorage {
      *
      * @param customersTableFilePath new value of customersTableFilePath
      */
-    public void setcustomersTableFilePath(String customersTableFilePath) {
+    public void setCustomersTableFilePath(String customersTableFilePath) {
         this.customersTableFilePath = customersTableFilePath;
     }
 
@@ -237,6 +241,42 @@ public class Operation implements IDataStorage {
         catch (IOException ex) {
             System.err.println(String.format("Error saving data in %s: %s", dataStorageFilePath, ex.getMessage()));
         }
+    }
+
+    @Override
+    public <T extends IExportableToCsv> ArrayList<T> loadDataCsv(String dataStorageFilePath, String separatorCsv, Class<T> objectClass) {
+        ArrayList<T> dataList = new ArrayList<>();
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(dataStorageFilePath))){
+            String line;
+            while ((line = br.readLine()) != null){
+                String[] properties = line.split(separatorCsv);
+                T object = parseCsvLine(properties, objectClass);
+                dataList.add(object);
+            }
+        }
+        catch (IOException ex) {
+            System.err.println(String.format("Error loading data in %s: %s", dataStorageFilePath, ex.getMessage()));
+        }
+        
+        return dataList;
+    }
+
+    private <T extends IExportableToCsv> T parseCsvLine(String[] fields, Class<T> objectClass) {
+        if (objectClass.equals(Customer.class)) {
+            Customer auxCustomer = new Customer();
+            auxCustomer.parseCsvLineProperties(fields);
+            return (T) auxCustomer;
+        } else if (objectClass.equals(Movie.class)) {
+            Movie auxMovie = new Movie();
+            auxMovie.parseCsvLineProperties(fields);
+            return (T) auxMovie;
+        } else if (objectClass.equals(Rental.class)) {
+            Rental auxRental = new Rental();
+            auxRental.parseCsvLineProperties(fields);
+            return (T) auxRental;
+        }
+        throw new IllegalArgumentException("Unknown class type: " + objectClass);
     }
 
 }

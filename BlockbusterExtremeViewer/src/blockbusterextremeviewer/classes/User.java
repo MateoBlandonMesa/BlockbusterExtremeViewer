@@ -14,6 +14,11 @@ public abstract class User {
     
     private String name;
 
+    public User() {
+        this.id = null;
+        this.name = null;
+    }
+
     public User(String id, String name) {
         this.id = id;
         this.name = name;
