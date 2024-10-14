@@ -110,7 +110,7 @@ public class Rental implements IExportableToCsv {
      *
      * @return the value of returnDate
      */
-    public LocalDate getreturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
@@ -119,7 +119,7 @@ public class Rental implements IExportableToCsv {
      *
      * @param returnDate new value of returnDate
      */
-    public void setreturnDate(LocalDate returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -186,7 +186,7 @@ public class Rental implements IExportableToCsv {
                 this.getId(), separatorCsv,
                 this.getIdMovie(), separatorCsv,
                 this.getIdCustomer(), separatorCsv, 
-                this.getreturnDate(), separatorCsv,
+                this.getReturnDate(), separatorCsv,
                 this.getRentalDate(), separatorCsv,
                 this.getTotalCost(), separatorCsv,
                 this.isMovieReturned());
@@ -195,7 +195,34 @@ public class Rental implements IExportableToCsv {
 
     @Override
     public IExportableToCsv parseCsvLineProperties(String[] properties) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        LocalDate returnDateProperty;
+        LocalDate rentalDateProperty;
+        double totalCostProperty;
+        boolean movieReturnedProperty;
+        
+        try{
+            returnDateProperty = LocalDate.parse(properties[3]);
+            rentalDateProperty = LocalDate.parse(properties[4]);
+            totalCostProperty = Double.parseDouble(properties[5]);
+            movieReturnedProperty = Boolean.parseBoolean(properties[6]);
+        }
+        catch (NumberFormatException ex){
+            System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
+            returnDateProperty = LocalDate.MIN;
+            rentalDateProperty = LocalDate.MIN;
+            totalCostProperty = 0.00;
+            movieReturnedProperty = false;
+        }
+        
+        this.setId(properties[0]);
+        this.setIdMovie(properties[1]);
+        this.setIdCustomer(properties[2]);
+        this.setReturnDate(returnDateProperty);
+        this.setRentalDate(rentalDateProperty);
+        this.setTotalCost(totalCostProperty);
+        this.setMovieReturned(movieReturnedProperty);
+
+        return this;
     }
 
 }

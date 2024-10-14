@@ -276,7 +276,9 @@ public class Operation implements IDataStorage {
             auxRental.parseCsvLineProperties(fields);
             return (T) auxRental;
         }
-        throw new IllegalArgumentException("Unknown class type: " + objectClass);
+        else{
+            throw new IllegalArgumentException("Unknown class type: " + objectClass);
+        }
     }
 
 }

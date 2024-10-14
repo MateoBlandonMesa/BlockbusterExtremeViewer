@@ -129,13 +129,13 @@ public class Customer extends User implements IExportableToCsv {
 
     @Override
     public IExportableToCsv parseCsvLineProperties(String[] properties) {
-        int ageProperty = 0;
+        int ageProperty;
         
         try{
             ageProperty = Integer.parseInt(properties[4]);
         }
         catch (NumberFormatException ex){
-            System.err.println(String.format("Error parsing %s: %s", ageProperty, ex.getMessage()));
+            System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
             ageProperty = 0;
         }
         
@@ -146,7 +146,6 @@ public class Customer extends User implements IExportableToCsv {
         this.setAge(ageProperty);
         this.setContactNumber(properties[5]);
         
-        //Customer customer = new Customer(properties[0], properties[1], properties[2], properties[3], ageProperty, properties[5]);
         return this;
     }
 

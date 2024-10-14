@@ -206,7 +206,30 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
 
     @Override
     public IExportableToCsv parseCsvLineProperties(String[] properties) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        double priceProperty;
+        int yearProperty;
+        
+        try{
+            priceProperty = Double.parseDouble(properties[1]);
+            yearProperty = Integer.parseInt(properties[4]);
+        }
+        catch (NumberFormatException ex){
+            System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
+            priceProperty = 0.00;
+            yearProperty = 0;
+        }
+        
+        this.setId(properties[0]);
+        this.setPrice(priceProperty);
+        this.setTitle(properties[2]);
+        this.setGenre(properties[3]);
+        this.setYear(yearProperty);
+        this.setFormat(properties[5]);
+        this.setDirector(properties[6]);
+        this.setCast(properties[7]);
+        this.setLanguage(properties[8]);
+        
+        return this;
     }
 
 }
