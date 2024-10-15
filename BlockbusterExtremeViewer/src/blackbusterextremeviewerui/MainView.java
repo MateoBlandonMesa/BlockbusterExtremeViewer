@@ -28,82 +28,66 @@ public class MainView extends javax.swing.JFrame {
 
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        archivoMenu = new javax.swing.JMenu();
+        nuevaPeliculaMenuItem = new javax.swing.JMenuItem();
+        nuevoClienteMenuItem = new javax.swing.JMenuItem();
+        salirMenuItem = new javax.swing.JMenuItem();
+        verMenu = new javax.swing.JMenu();
+        inventarioDePeliculasMenuItem = new javax.swing.JMenuItem();
+        listadeClientesMenuItem = new javax.swing.JMenuItem();
+        alquileresMenu = new javax.swing.JMenu();
+        nuevoAlquilerMenuItem = new javax.swing.JMenuItem();
+        listaDeAlquileresMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        archivoMenu.setMnemonic('f');
+        archivoMenu.setText("Archivo");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        nuevaPeliculaMenuItem.setMnemonic('o');
+        nuevaPeliculaMenuItem.setText("Nueva película");
+        nuevaPeliculaMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                nuevaPeliculaMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        archivoMenu.add(nuevaPeliculaMenuItem);
 
-        menuBar.add(fileMenu);
+        nuevoClienteMenuItem.setMnemonic('s');
+        nuevoClienteMenuItem.setText("Nuevo cliente");
+        archivoMenu.add(nuevoClienteMenuItem);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        salirMenuItem.setMnemonic('a');
+        salirMenuItem.setText("Salir");
+        archivoMenu.add(salirMenuItem);
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
+        menuBar.add(archivoMenu);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
+        verMenu.setMnemonic('e');
+        verMenu.setText("Ver");
 
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
+        inventarioDePeliculasMenuItem.setMnemonic('t');
+        inventarioDePeliculasMenuItem.setText("Inventario de películas");
+        verMenu.add(inventarioDePeliculasMenuItem);
 
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        listadeClientesMenuItem.setMnemonic('y');
+        listadeClientesMenuItem.setText("Lista de clientes");
+        verMenu.add(listadeClientesMenuItem);
 
-        menuBar.add(editMenu);
+        menuBar.add(verMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        alquileresMenu.setMnemonic('h');
+        alquileresMenu.setText("Alquileres");
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        nuevoAlquilerMenuItem.setMnemonic('c');
+        nuevoAlquilerMenuItem.setText("Nuevo alquiler");
+        alquileresMenu.add(nuevoAlquilerMenuItem);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        listaDeAlquileresMenuItem.setMnemonic('a');
+        listaDeAlquileresMenuItem.setText("Lista de alquileres");
+        alquileresMenu.add(listaDeAlquileresMenuItem);
 
-        menuBar.add(helpMenu);
+        menuBar.add(alquileresMenu);
 
         setJMenuBar(menuBar);
 
@@ -125,9 +109,9 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
+    private void nuevaPeliculaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPeliculaMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nuevaPeliculaMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,21 +149,18 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JMenu alquileresMenu;
+    private javax.swing.JMenu archivoMenu;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu editMenu;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem inventarioDePeliculasMenuItem;
+    private javax.swing.JMenuItem listaDeAlquileresMenuItem;
+    private javax.swing.JMenuItem listadeClientesMenuItem;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenuItem nuevaPeliculaMenuItem;
+    private javax.swing.JMenuItem nuevoAlquilerMenuItem;
+    private javax.swing.JMenuItem nuevoClienteMenuItem;
+    private javax.swing.JMenuItem salirMenuItem;
+    private javax.swing.JMenu verMenu;
     // End of variables declaration//GEN-END:variables
 
 }

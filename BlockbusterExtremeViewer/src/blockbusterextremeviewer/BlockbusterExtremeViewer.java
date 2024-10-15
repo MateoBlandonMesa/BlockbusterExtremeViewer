@@ -29,9 +29,9 @@ public class BlockbusterExtremeViewer {
         ArrayList<Movie> movies = blockbusterOperation.getMovies();
         ArrayList<Rental> rentals = blockbusterOperation.getRentals();
         
-        blockbusterOperation.createCustomer("1010100102", "Mateo", "Blandon", "mateo.blandon@udea.edu.co", 18, "3015149087");
-        blockbusterOperation.createMovie(5500.00, "Men in Black 2", "SciFy-Comedy", 1997, "DVD", "Barry Sonnenfeld", "Will Smith", "English");
-        blockbusterOperation.createRental("id Men in Black 2", "1010100103", LocalDate.now(), LocalDate.now().plusDays(7), 4500.00, false);
+        blockbusterOperation.createCustomer("12345678901", "Ernesto", "Pérez", "ernesto.perez@udea.edu.co", 18, "3015149087");
+        blockbusterOperation.createMovie(6500.00, "Movie name", "Movie genre", 1997, "DVD", "Movie director", "Movie cast", "Movie language");
+        blockbusterOperation.createRental("id Movie", "id customer", LocalDate.now(), LocalDate.now().plusDays(7), 4500.00, false);
         
         System.out.println("Operation finished!");
     }
