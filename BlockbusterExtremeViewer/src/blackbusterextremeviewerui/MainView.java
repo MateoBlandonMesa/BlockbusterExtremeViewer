@@ -4,17 +4,64 @@
  */
 package blackbusterextremeviewerui;
 
+import blockbusterextremeviewer.classes.Movie;
+import blockbusterextremeviewer.classes.Operation;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+
 /**
  *
  * @author blandonm
  */
 public class MainView extends javax.swing.JFrame {
 
+    Operation blockbusterOperation = new Operation();
+
     /**
      * Creates new form MainView
      */
     public MainView() {
         initComponents();
+        this.setLocationRelativeTo(null);
+
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        List<Movie> movies = loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath());
+        for (Movie movie : movies) {
+            listModel.addElement(movie.getTitle()); // Usa el atributo que deseas mostrar, aquí es el título
+        }
+        jListMovies.setModel(listModel);
+
+    }
+
+    public List<Movie> loadMoviesFromCSV(String filePath) {
+
+        List<Movie> moviesModel = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+                if (values.length == 9) {
+                    String id = values[0];
+                    double price = Double.parseDouble(values[1]);
+                    String title = values[2];
+                    String genre = values[3];
+                    int year = Integer.parseInt(values[4]);
+                    String format = values[5];
+                    String director = values[6];
+                    String cast = values[7];
+                    String language = values[8];
+                    moviesModel.add(new Movie(id, price, title, genre, year, format, director, cast, language));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
+        }
+        return moviesModel;
     }
 
     /**
@@ -26,7 +73,18 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desktopPane = new javax.swing.JDesktopPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
+        bg = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelMovies = new javax.swing.JLabel();
+        jLabelDescription = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListMovies = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaDescription = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         archivoMenu = new javax.swing.JMenu();
         nuevaPeliculaMenuItem = new javax.swing.JMenuItem();
@@ -39,7 +97,66 @@ public class MainView extends javax.swing.JFrame {
         nuevoAlquilerMenuItem = new javax.swing.JMenuItem();
         listaDeAlquileresMenuItem = new javax.swing.JMenuItem();
 
+        jScrollPane3.setViewportView(jEditorPane1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        bg.setBackground(new java.awt.Color(255, 255, 255));
+        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("BlockBuster Store");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/blockbusterIcon.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel2)
+                .addContainerGap(365, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 50));
+
+        jLabelMovies.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabelMovies.setText("Peliculas disponibles");
+        bg.add(jLabelMovies, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+
+        jLabelDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabelDescription.setText("Descripción");
+        bg.add(jLabelDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, -1, -1));
+
+        jListMovies.setBorder(null);
+        jListMovies.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(jListMovies);
+
+        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 270, 300));
+
+        jTextAreaDescription.setColumns(20);
+        jTextAreaDescription.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jTextAreaDescription.setRows(5);
+        jTextAreaDescription.setBorder(null);
+        jScrollPane2.setViewportView(jTextAreaDescription);
+
+        bg.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 280, 300));
 
         archivoMenu.setMnemonic('f');
         archivoMenu.setText("Archivo");
@@ -55,10 +172,20 @@ public class MainView extends javax.swing.JFrame {
 
         nuevoClienteMenuItem.setMnemonic('s');
         nuevoClienteMenuItem.setText("Nuevo cliente");
+        nuevoClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoClienteMenuItemActionPerformed(evt);
+            }
+        });
         archivoMenu.add(nuevoClienteMenuItem);
 
         salirMenuItem.setMnemonic('a');
         salirMenuItem.setText("Salir");
+        salirMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirMenuItemActionPerformed(evt);
+            }
+        });
         archivoMenu.add(salirMenuItem);
 
         menuBar.add(archivoMenu);
@@ -81,6 +208,11 @@ public class MainView extends javax.swing.JFrame {
 
         nuevoAlquilerMenuItem.setMnemonic('c');
         nuevoAlquilerMenuItem.setText("Nuevo alquiler");
+        nuevoAlquilerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoAlquilerMenuItemActionPerformed(evt);
+            }
+        });
         alquileresMenu.add(nuevoAlquilerMenuItem);
 
         listaDeAlquileresMenuItem.setMnemonic('a');
@@ -95,23 +227,34 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void nuevaPeliculaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPeliculaMenuItemActionPerformed
-        // TODO add your handling code here:
+        JFNewMovie newMovie = new JFNewMovie();
+        newMovie.setVisible(true);
     }//GEN-LAST:event_nuevaPeliculaMenuItemActionPerformed
+
+    private void nuevoClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteMenuItemActionPerformed
+        JFNewCostumer nuevoCliente = new JFNewCostumer();
+        nuevoCliente.setVisible(true);
+    }//GEN-LAST:event_nuevoClienteMenuItemActionPerformed
+
+    private void nuevoAlquilerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlquilerMenuItemActionPerformed
+        JFNewRental nuevaRenta = new JFNewRental();
+        nuevaRenta.setVisible(true);
+    }//GEN-LAST:event_nuevoAlquilerMenuItemActionPerformed
+
+    private void salirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salirMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,18 +284,27 @@ public class MainView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainView().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu alquileresMenu;
     private javax.swing.JMenu archivoMenu;
-    private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JPanel bg;
     private javax.swing.JMenuItem inventarioDePeliculasMenuItem;
+    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelDescription;
+    private javax.swing.JLabel jLabelMovies;
+    private javax.swing.JList<String> jListMovies;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextAreaDescription;
     private javax.swing.JMenuItem listaDeAlquileresMenuItem;
     private javax.swing.JMenuItem listadeClientesMenuItem;
     private javax.swing.JMenuBar menuBar;

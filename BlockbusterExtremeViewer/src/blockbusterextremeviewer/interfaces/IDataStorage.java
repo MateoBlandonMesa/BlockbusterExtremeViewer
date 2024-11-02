@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * @author blandonm
  */
 public interface IDataStorage {
-    
+
     void saveDataCsv(IExportableToCsv object, String dataStorageFilePath, String separatorCsv);
-    
+
     <T extends IExportableToCsv> ArrayList<T> loadDataCsv(String dataStorageFilePath, String separatorCsv, Class<T> objectClass);
-    
+
 }

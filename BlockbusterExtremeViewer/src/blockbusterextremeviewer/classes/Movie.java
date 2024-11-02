@@ -12,19 +12,19 @@ import blockbusterextremeviewer.interfaces.IRentProduct;
  * @author blandonm
  */
 public class Movie extends Product implements IRentProduct, IExportableToCsv {
-    
+
     private String title;
-    
+
     private String genre;
-    
+
     private int year;
-        
+
     private String format;
-    
+
     private String director;
-    
+
     private String cast;
-    
+
     private String language;
 
     public Movie() {
@@ -38,8 +38,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.language = null;
     }
 
-    
-    
     public Movie(String id, double price, String title, String genre, int year, String format, String director, String cast, String language) {
         super(id, price);
         this.title = title;
@@ -50,7 +48,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.cast = cast;
         this.language = language;
     }
-    
 
     /**
      * Get the value of language
@@ -70,7 +67,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.language = language;
     }
 
-
     /**
      * Get the value of cast
      *
@@ -88,7 +84,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
     public void setCast(String cast) {
         this.cast = cast;
     }
-
 
     /**
      * Get the value of director
@@ -108,7 +103,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.director = director;
     }
 
-
     /**
      * Get the value of format
      *
@@ -126,7 +120,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
     public void setFormat(String format) {
         this.format = format;
     }
-
 
     /**
      * Get the value of year
@@ -146,7 +139,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.year = year;
     }
 
-
     /**
      * Get the value of genre
      *
@@ -164,7 +156,6 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
     public void setGenre(String genre) {
         this.genre = genre;
     }
-
 
     /**
      * Get the value of title
@@ -191,10 +182,10 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
 
     @Override
     public String toCsv(String separatorCsv) {
-        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", 
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
                 this.getId(), separatorCsv,
                 this.getPrice(), separatorCsv,
-                this.getTitle(), separatorCsv, 
+                this.getTitle(), separatorCsv,
                 this.getGenre(), separatorCsv,
                 this.getYear(), separatorCsv,
                 this.getFormat(), separatorCsv,
@@ -208,17 +199,16 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
     public IExportableToCsv parseCsvLineProperties(String[] properties) {
         double priceProperty;
         int yearProperty;
-        
-        try{
+
+        try {
             priceProperty = Double.parseDouble(properties[1]);
             yearProperty = Integer.parseInt(properties[4]);
-        }
-        catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
             priceProperty = 0.00;
             yearProperty = 0;
         }
-        
+
         this.setId(properties[0]);
         this.setPrice(priceProperty);
         this.setTitle(properties[2]);
@@ -228,8 +218,12 @@ public class Movie extends Product implements IRentProduct, IExportableToCsv {
         this.setDirector(properties[6]);
         this.setCast(properties[7]);
         this.setLanguage(properties[8]);
-        
+
         return this;
     }
 
+    @Override
+    public String toString() {
+        return this.title; // Muestra el título y el año de la película
+    }
 }

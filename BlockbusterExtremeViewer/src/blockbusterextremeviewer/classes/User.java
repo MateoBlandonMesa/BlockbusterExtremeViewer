@@ -9,9 +9,9 @@ package blockbusterextremeviewer.classes;
  * @author blandonm
  */
 public abstract class User {
-    
+
     private String id;
-    
+
     private String name;
 
     public User() {
@@ -23,7 +23,6 @@ public abstract class User {
         this.id = id;
         this.name = name;
     }
-    
 
     /**
      * Get the value of name
@@ -42,7 +41,6 @@ public abstract class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
     /**
      * Get the value of id

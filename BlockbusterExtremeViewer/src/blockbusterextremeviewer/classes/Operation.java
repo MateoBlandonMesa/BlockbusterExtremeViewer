@@ -21,25 +21,23 @@ import java.util.UUID;
  * @author blandonm
  */
 public final class Operation implements IDataStorage, IOperation {
-    
+
     private ArrayList<Movie> movies;
-    
+
     private ArrayList<Customer> customers;
-    
+
     private ArrayList<Rental> rentals;
-    
+
     private String separatorCsv;
-    
+
     private String customersTableFilePath;
-    
+
     private String rootFolder;
-    
+
     private String moviesTableFilePath;
-    
+
     private String rentalsTableFilePath;
-    
-    
-    
+
     public Operation() {
         this.separatorCsv = ";";
         this.rootFolder = new File("").getAbsolutePath();
@@ -49,7 +47,7 @@ public final class Operation implements IDataStorage, IOperation {
         this.movies = this.loadDataCsv(this.moviesTableFilePath, this.separatorCsv, Movie.class);
         this.customers = this.loadDataCsv(this.customersTableFilePath, this.separatorCsv, Customer.class);
         this.rentals = this.loadDataCsv(this.rentalsTableFilePath, this.separatorCsv, Rental.class);
-        
+
     }
 
     /**
@@ -70,7 +68,6 @@ public final class Operation implements IDataStorage, IOperation {
         this.rentalsTableFilePath = rentalsTableFilePath;
     }
 
-
     /**
      * Get the value of moviesTableFilePath
      *
@@ -88,7 +85,6 @@ public final class Operation implements IDataStorage, IOperation {
     public void setMoviesTableFilePath(String moviesTableFilePath) {
         this.moviesTableFilePath = moviesTableFilePath;
     }
-
 
     /**
      * Get the value of rootFolder
@@ -108,7 +104,6 @@ public final class Operation implements IDataStorage, IOperation {
         this.rootFolder = rootFolder;
     }
 
-
     /**
      * Get the value of customersTableFilePath
      *
@@ -127,7 +122,6 @@ public final class Operation implements IDataStorage, IOperation {
         this.customersTableFilePath = customersTableFilePath;
     }
 
-
     /**
      * Get the value of separatorCsv
      *
@@ -145,7 +139,6 @@ public final class Operation implements IDataStorage, IOperation {
     public void setSeparatorCsv(String separatorCsv) {
         this.separatorCsv = separatorCsv;
     }
-    
 
     /**
      * Get the value of rentals
@@ -165,7 +158,6 @@ public final class Operation implements IDataStorage, IOperation {
         this.rentals = rentals;
     }
 
-
     /**
      * Get the value of customers
      *
@@ -184,7 +176,6 @@ public final class Operation implements IDataStorage, IOperation {
         this.customers = customers;
     }
 
-
     /**
      * Get the value of movies
      *
@@ -202,28 +193,28 @@ public final class Operation implements IDataStorage, IOperation {
     public void setMovies(ArrayList<Movie> movies) {
         this.movies = movies;
     }
-    
+
     @Override
-    public void createCustomer(String id, String name, String lastName, String email, int age, String contactNumber ){
+    public void createCustomer(String id, String name, String lastName, String email, int age, String contactNumber) {
         Customer newCustomer = new Customer(id, name, lastName, email, age, contactNumber);
         saveDataCsv(newCustomer, this.customersTableFilePath, this.separatorCsv);
         this.customers.add(newCustomer);
         System.out.println(String.format("Customer created: %s %s (%s)", name, lastName, id));
     }
-    
+
     @Override
-    public void createMovie(double price, String title, String genre, int year, String format, String director, String cast, String language){
+    public void createMovie(double price, String title, String genre, int year, String format, String director, String cast, String language) {
         String id = UUID.randomUUID().toString();
         Movie newMovie = new Movie(id, price, title, genre, year, format, director, cast, language);
         saveDataCsv(newMovie, this.moviesTableFilePath, this.separatorCsv);
         this.movies.add(newMovie);
         System.out.println(String.format("Movie created: %s %s (%s)", title, genre, id));
     }
-    
+
     @Override
-    public void createRental(String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned){
+    public void createRental(String idMovie, String idCustomer) {
         String id = UUID.randomUUID().toString();
-        Rental newRental = new Rental(id, idMovie, idCustomer, returnDate, rentalDate, totalCost, movieReturned);
+        Rental newRental = new Rental(id, idMovie, idCustomer, LocalDate.now(), LocalDate.now().plusDays(7), 4500.00, false);
         saveDataCsv(newRental, this.rentalsTableFilePath, this.separatorCsv);
         this.rentals.add(newRental);
         System.out.println(String.format("Rental created: %s %s (%s)", idMovie, idCustomer, id));
@@ -233,7 +224,7 @@ public final class Operation implements IDataStorage, IOperation {
     public void saveDataCsv(IExportableToCsv object, String dataStorageFilePath, String separatorCsv) {
         File file = new File(dataStorageFilePath);
         File folder = file.getParentFile();
-            
+
         if (folder != null && !folder.exists()) {
             folder.mkdirs();
         }
@@ -241,8 +232,7 @@ public final class Operation implements IDataStorage, IOperation {
             String stringToSave = object.toCsv(separatorCsv);
             writer.append(stringToSave).append("\n");
             System.out.println(String.format("Data saved in %s", dataStorageFilePath));
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println(String.format("Error saving data in %s: %s", dataStorageFilePath, ex.getMessage()));
         }
     }
@@ -250,23 +240,28 @@ public final class Operation implements IDataStorage, IOperation {
     @Override
     public <T extends IExportableToCsv> ArrayList<T> loadDataCsv(String dataStorageFilePath, String separatorCsv, Class<T> objectClass) {
         ArrayList<T> dataList = new ArrayList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(dataStorageFilePath))){
+
+        try (BufferedReader br = new BufferedReader(new FileReader(dataStorageFilePath))) {
             String line;
-            while ((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] properties = line.split(separatorCsv);
                 T object = parseCsvLine(properties, objectClass);
                 dataList.add(object);
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println(String.format("Error loading data in %s: %s", dataStorageFilePath, ex.getMessage()));
         }
-        
+
         return dataList;
     }
 
     private <T extends IExportableToCsv> T parseCsvLine(String[] fields, Class<T> objectClass) {
+
+        if (fields.length < 1) {
+            System.err.println("Error: la línea no contiene suficientes campos. Recibido: " + String.join(";", fields));
+            return null;
+        }
+
         if (objectClass.equals(Customer.class)) {
             Customer auxCustomer = new Customer();
             auxCustomer.parseCsvLineProperties(fields);
@@ -279,10 +274,13 @@ public final class Operation implements IDataStorage, IOperation {
             Rental auxRental = new Rental();
             auxRental.parseCsvLineProperties(fields);
             return (T) auxRental;
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Unknown class type: " + objectClass);
         }
+    }
+
+    public String get() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

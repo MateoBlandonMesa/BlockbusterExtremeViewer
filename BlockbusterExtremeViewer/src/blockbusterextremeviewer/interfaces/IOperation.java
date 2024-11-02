@@ -4,8 +4,6 @@
  */
 package blockbusterextremeviewer.interfaces;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author blandonm
@@ -16,6 +14,6 @@ public interface IOperation {
 
     void createMovie(double price, String title, String genre, int year, String format, String director, String cast, String language);
 
-    void createRental(String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned);
-    
+    void createRental(String idMovie, String idCustomer);
+
 }

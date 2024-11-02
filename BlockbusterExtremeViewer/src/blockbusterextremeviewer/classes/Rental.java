@@ -12,19 +12,19 @@ import java.time.LocalDate;
  * @author blandonm
  */
 public class Rental implements IExportableToCsv {
-    
+
     private String id;
-    
+
     private String idMovie;
-    
+
     private String idCustomer;
-    
+
     private LocalDate returnDate;
-    
+
     private LocalDate rentalDate;
-    
+
     private double totalCost;
-    
+
     private boolean movieReturned;
 
     public Rental() {
@@ -46,7 +46,6 @@ public class Rental implements IExportableToCsv {
         this.totalCost = totalCost;
         this.movieReturned = movieReturned;
     }
-    
 
     /**
      * Get the value of movieReturned
@@ -66,7 +65,6 @@ public class Rental implements IExportableToCsv {
         this.movieReturned = movieReturned;
     }
 
-
     /**
      * Get the value of totalCost
      *
@@ -84,7 +82,6 @@ public class Rental implements IExportableToCsv {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
-
 
     /**
      * Get the value of rentalDate
@@ -104,7 +101,6 @@ public class Rental implements IExportableToCsv {
         this.rentalDate = rentalDate;
     }
 
-
     /**
      * Get the value of returnDate
      *
@@ -122,7 +118,6 @@ public class Rental implements IExportableToCsv {
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
-
 
     /**
      * Get the value of idCustomer
@@ -142,7 +137,6 @@ public class Rental implements IExportableToCsv {
         this.idCustomer = idCustomer;
     }
 
-
     /**
      * Get the value of idMovie
      *
@@ -160,7 +154,6 @@ public class Rental implements IExportableToCsv {
     public void setIdMovie(String idMovie) {
         this.idMovie = idMovie;
     }
-
 
     /**
      * Get the value of id
@@ -182,10 +175,10 @@ public class Rental implements IExportableToCsv {
 
     @Override
     public String toCsv(String separatorCsv) {
-        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s", 
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s",
                 this.getId(), separatorCsv,
                 this.getIdMovie(), separatorCsv,
-                this.getIdCustomer(), separatorCsv, 
+                this.getIdCustomer(), separatorCsv,
                 this.getReturnDate(), separatorCsv,
                 this.getRentalDate(), separatorCsv,
                 this.getTotalCost(), separatorCsv,
@@ -199,21 +192,20 @@ public class Rental implements IExportableToCsv {
         LocalDate rentalDateProperty;
         double totalCostProperty;
         boolean movieReturnedProperty;
-        
-        try{
+
+        try {
             returnDateProperty = LocalDate.parse(properties[3]);
             rentalDateProperty = LocalDate.parse(properties[4]);
             totalCostProperty = Double.parseDouble(properties[5]);
             movieReturnedProperty = Boolean.parseBoolean(properties[6]);
-        }
-        catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
             returnDateProperty = LocalDate.MIN;
             rentalDateProperty = LocalDate.MIN;
             totalCostProperty = 0.00;
             movieReturnedProperty = false;
         }
-        
+
         this.setId(properties[0]);
         this.setIdMovie(properties[1]);
         this.setIdCustomer(properties[2]);

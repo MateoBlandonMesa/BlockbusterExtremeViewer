@@ -9,8 +9,8 @@ package blockbusterextremeviewer.interfaces;
  * @author blandonm
  */
 public interface IExportableToCsv {
-    
+
     String toCsv(String separatorCsv);
-    
+
     IExportableToCsv parseCsvLineProperties(String[] properties);
 }

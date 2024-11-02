@@ -9,7 +9,7 @@ package blockbusterextremeviewer.interfaces;
  * @author blandonm
  */
 public interface IRentProduct {
-    
+
     void toRent();
-    
+
 }

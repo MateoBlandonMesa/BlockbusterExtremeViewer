@@ -9,9 +9,9 @@ package blockbusterextremeviewer.classes;
  * @author blandonm
  */
 public abstract class Product {
-    
+
     private String id;
-    
+
     private double price;
 
     public Product() {
@@ -23,7 +23,6 @@ public abstract class Product {
         this.id = id;
         this.price = price;
     }
-    
 
     /**
      * Get the value of price
@@ -42,7 +41,6 @@ public abstract class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
     /**
      * Get the value of id

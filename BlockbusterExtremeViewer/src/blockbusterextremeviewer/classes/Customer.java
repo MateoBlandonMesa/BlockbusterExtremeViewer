@@ -11,13 +11,13 @@ import blockbusterextremeviewer.interfaces.IExportableToCsv;
  * @author blandonm
  */
 public class Customer extends User implements IExportableToCsv {
-    
+
     private String lastName;
-    
+
     private String email;
-    
+
     private int age;
-    
+
     private String contactNumber;
 
     public Customer() {
@@ -27,9 +27,7 @@ public class Customer extends User implements IExportableToCsv {
         this.age = 0;
         this.contactNumber = null;
     }
-    
 
-    
     public Customer(String id, String name, String lastName, String email, int age, String contactNumber) {
         super(id, name);
         this.lastName = lastName;
@@ -37,7 +35,6 @@ public class Customer extends User implements IExportableToCsv {
         this.age = age;
         this.contactNumber = contactNumber;
     }
-
 
     /**
      * Get the value of contactNumber
@@ -57,7 +54,6 @@ public class Customer extends User implements IExportableToCsv {
         this.contactNumber = contactNumber;
     }
 
-
     /**
      * Get the value of age
      *
@@ -75,7 +71,6 @@ public class Customer extends User implements IExportableToCsv {
     public void setAge(int age) {
         this.age = age;
     }
-
 
     /**
      * Get the value of email
@@ -95,7 +90,6 @@ public class Customer extends User implements IExportableToCsv {
         this.email = email;
     }
 
-
     /**
      * Get the value of lastName
      *
@@ -114,13 +108,12 @@ public class Customer extends User implements IExportableToCsv {
         this.lastName = lastName;
     }
 
-    
     @Override
     public String toCsv(String separatorCsv) {
-        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s", 
+        String stringToSave = String.format("%s%s%s%s%s%s%s%s%s%s%s",
                 this.getId(), separatorCsv,
                 this.getName(), separatorCsv,
-                this.getLastName(), separatorCsv, 
+                this.getLastName(), separatorCsv,
                 this.getEmail(), separatorCsv,
                 this.getAge(), separatorCsv,
                 this.getContactNumber());
@@ -130,23 +123,26 @@ public class Customer extends User implements IExportableToCsv {
     @Override
     public IExportableToCsv parseCsvLineProperties(String[] properties) {
         int ageProperty;
-        
-        try{
+
+        try {
             ageProperty = Integer.parseInt(properties[4]);
-        }
-        catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             System.err.println(String.format("Error parsing property: %s", ex.getMessage()));
             ageProperty = 0;
         }
-        
+
         this.setId(properties[0]);
         this.setName(properties[1]);
         this.setLastName(properties[2]);
         this.setEmail(properties[3]);
         this.setAge(ageProperty);
         this.setContactNumber(properties[5]);
-        
+
         return this;
     }
 
+    @Override
+    public String toString() {
+        return this.getName() + " " + this.getLastName();
+    }
 }
