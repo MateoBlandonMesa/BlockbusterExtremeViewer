@@ -156,20 +156,27 @@ public class JFNewCostumer extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldLastNameActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        String id = jTextFieldId.getText();
-        String name = jTextFieldName.getText();
-        String lastName = jTextFieldLastName.getText();
-        String number = jTextFieldNumber.getText();
-        int age = Integer.parseInt(jTextFieldAge.getText());
-        String email = jTextFieldEmail.getText();
 
-        Operation blockbusterOperation = new Operation();
+        try {
+            String id = jTextFieldId.getText();
+            String name = jTextFieldName.getText();
+            String lastName = jTextFieldLastName.getText();
+            String number = jTextFieldNumber.getText();
+            int age = Integer.parseInt(jTextFieldAge.getText());
+            String email = jTextFieldEmail.getText();
+            int contactNumber = Integer.parseInt(jTextFieldNumber.getText());
 
-        blockbusterOperation.createCustomer(id, name, lastName, email, age, number);
+            if (id.equals("CC") || name.equals("Nombre") || lastName.equals("Apellido") || email.equals("Correo")) {
+                JOptionPane.showMessageDialog(this, "Por favor verifica los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Operation blockbusterOperation = new Operation();
+                blockbusterOperation.createCustomer(id, name, lastName, email, age, number);
+                JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa un valor numerico valido", "Error", JOptionPane.ERROR_MESSAGE);
 
-        JOptionPane.showMessageDialog(this, "Cliente creado con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
-
-
+        }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed

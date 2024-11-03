@@ -186,19 +186,29 @@ public class JFNewMovie extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldYearActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        String title = jTextFieldTitle.getText();
-        String genre = jTextFieldGenre.getText();
-        int year = Integer.parseInt(jTextFieldYear.getText());
-        String format = jComboBoxFormat.getSelectedItem().toString();
-        String director = jTextFieldDirector.getText();
-        String languaje = jComboBoxLanguaje.getSelectedItem().toString();
-        String cast = jTextFieldCast.getText();
 
-        Operation blockbusterOperation = new Operation();
+        try {
+            String title = jTextFieldTitle.getText();
+            String genre = jTextFieldGenre.getText();
+            int year = Integer.parseInt(jTextFieldYear.getText());
+            String format = jComboBoxFormat.getSelectedItem().toString();
+            String director = jTextFieldDirector.getText();
+            String languaje = jComboBoxLanguaje.getSelectedItem().toString();
+            String cast = jTextFieldCast.getText();
+            if (title.equals("Titulo") || genre.equals("Genero") || format.equals("Formato") || director.equals("Director") || languaje.equals("Idioma") || cast.equals("Reparto")) {
+                JOptionPane.showMessageDialog(this, "Por favor rellena todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 
-        blockbusterOperation.createMovie(4500.00, title, genre, year, format, director, cast, languaje);
+            } else {
+                Operation blockbusterOperation = new Operation();
+                blockbusterOperation.createMovie(4500.00, title, genre, year, format, director, cast, languaje);
 
-        JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa un valor numerico valido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
