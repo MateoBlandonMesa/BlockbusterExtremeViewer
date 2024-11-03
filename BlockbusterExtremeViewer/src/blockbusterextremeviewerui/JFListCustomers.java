@@ -5,6 +5,7 @@
 package blockbusterextremeviewerui;
 
 import blockbusterextremeviewer.classes.Customer;
+import blockbusterextremeviewer.classes.Movie;
 import blockbusterextremeviewer.classes.Operation;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,7 +19,7 @@ import javax.swing.DefaultListModel;
  */
 public final class JFListCustomers extends javax.swing.JFrame {
 
-    Operation blockbusterOperation = new Operation();
+    private MainView parent;
 
     /**
      * Creates new form MainView
@@ -28,9 +29,18 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
+    }
+    
+    public JFListCustomers(MainView parent) {
+        initComponents();
+
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.parent = parent;
+        
+        ArrayList<Customer> customers = parent.blockbusterOperation.getCustomers();
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        List<Customer> customers = loadCustomersFromCSV(blockbusterOperation.getCustomersTableFilePath());
 
         for (Customer costumer : customers) {
             listModel.addElement(costumer.getName() + " " + costumer.getLastName()); // Usa el atributo que deseas mostrar, aquí es el título
@@ -54,30 +64,6 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
             }
         });
-    }
-
-    public List<Customer> loadCustomersFromCSV(String filePath) {
-
-        List<Customer> customerModel = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                if (values.length == 6) {
-                    String id = values[0];
-                    String name = values[1];
-                    String lastName = values[2];
-                    String email = values[3];
-                    int age = Integer.parseInt(values[4]);
-                    String contactNumber = values[5];
-                    customerModel.add(new Customer(id, name, lastName, email, age, contactNumber));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
-        }
-        return customerModel;
     }
 
     /**

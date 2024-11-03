@@ -17,11 +17,18 @@ import javax.swing.JOptionPane;
  */
 public class JFNewCostumer extends javax.swing.JFrame {
 
-    Operation blockbusterOperation = new Operation();
+    private MainView parent;
 
     /**
      * Creates new form JFCliente
      */
+    public JFNewCostumer(MainView parent) {
+        initComponents();
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.parent = parent;
+    }
+    
     public JFNewCostumer() {
         initComponents();
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -205,7 +212,10 @@ public class JFNewCostumer extends javax.swing.JFrame {
             } else if (existVerify(Integer.toString(id)) == true) {
                 JOptionPane.showMessageDialog(this, "Ya existe el cliente", "Información", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                blockbusterOperation.createCustomer(Integer.toString(id), name, lastName, email, age, Integer.toString(number));
+                parent.blockbusterOperation.createCustomer(Integer.toString(id), name, lastName, email, age, Integer.toString(number));
+                parent.dispose(); // Close oarent form
+                new MainView().setVisible(true); // Restrart parent form
+                dispose(); // Close child form
                 JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
@@ -215,17 +225,13 @@ public class JFNewCostumer extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     public boolean existVerify(String idCustomer) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader(blockbusterOperation.getCustomersTableFilePath()))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                return values[0].equals(idCustomer);
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al buscar el id del cliente: " + e.getMessage());
+        
+        for (Customer customer : parent.blockbusterOperation.getCustomers()) {
+            if (customer.getId().equals(idCustomer)) {
+                return true;
         }
-        return true;
+        }
+        return false;
     }
 
     private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed

@@ -13,10 +13,15 @@ import javax.swing.JOptionPane;
  * @author sarai
  */
 public class JFNewMovie extends javax.swing.JFrame {
+    private MainView parent;
 
-    /**
-     * Creates new form JFCliente
-     */
+    public JFNewMovie(MainView parent) {
+        initComponents();
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.parent = parent;
+    }
+    
     public JFNewMovie() {
         initComponents();
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -228,8 +233,11 @@ public class JFNewMovie extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Por favor rellena todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 
             } else {
-                Operation blockbusterOperation = new Operation();
-                blockbusterOperation.createMovie(4500.00, title, genre, year, format, director, cast, languaje);
+                //Operation blockbusterOperation = new Operation();
+                parent.blockbusterOperation.createMovie(4500.00, title, genre, year, format, director, cast, languaje);
+                parent.dispose(); // Close oarent form
+                new MainView().setVisible(true); // Restrart parent form
+                dispose(); // Close child form
 
                 JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
 

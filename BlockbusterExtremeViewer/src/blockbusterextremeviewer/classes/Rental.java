@@ -37,7 +37,7 @@ public class Rental implements IExportableToCsv {
         this.movieReturned = false;
     }
 
-    public Rental(String id, String idMovie, String idCustomer, LocalDate returnDate, LocalDate rentalDate, double totalCost, boolean movieReturned) {
+    public Rental(String id, String idMovie, String idCustomer, LocalDate rentalDate, LocalDate returnDate, double totalCost, boolean movieReturned) {
         this.id = id;
         this.idMovie = idMovie;
         this.idCustomer = idCustomer;

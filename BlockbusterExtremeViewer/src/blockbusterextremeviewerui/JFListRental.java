@@ -4,6 +4,8 @@
  */
 package blockbusterextremeviewerui;
 
+import blockbusterextremeviewer.classes.Customer;
+import blockbusterextremeviewer.classes.Movie;
 import blockbusterextremeviewer.classes.Operation;
 import blockbusterextremeviewer.classes.Rental;
 import java.io.BufferedReader;
@@ -19,7 +21,7 @@ import javax.swing.DefaultListModel;
  */
 public final class JFListRental extends javax.swing.JFrame {
 
-    Operation blockbusterOperation = new Operation();
+    private MainView parent;
 
     /**
      * Creates new form MainView
@@ -29,9 +31,19 @@ public final class JFListRental extends javax.swing.JFrame {
 
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
+    }
+    
+    public JFListRental(MainView parent) {
+        initComponents();
+
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.parent = parent;
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        List<Rental> rentals = loadRentalsFromCSV(blockbusterOperation.getRentalsTableFilePath());
+        ArrayList<Rental> rentals = parent.blockbusterOperation.getRentals();
+        ArrayList<Movie> movies = parent.blockbusterOperation.getMovies();
+        ArrayList<Customer> customers = parent.blockbusterOperation.getCustomers();
 
         for (Rental rental : rentals) {
             listModel.addElement(rental.getId());
@@ -43,10 +55,13 @@ public final class JFListRental extends javax.swing.JFrame {
                 int selectedIndex = jListRentals.getSelectedIndex();
                 if (selectedIndex != -1) {
                     Rental selectedRental = rentals.get(selectedIndex);
+                    Movie referencedMovie = movies.stream().filter(m -> m.getId().equals(selectedRental.getIdMovie())).findFirst().orElse(null);
+                    Customer referencedCustomer = customers.stream().filter(m -> m.getId().equals(selectedRental.getIdCustomer())).findFirst().orElse(null);
+
                     jTextAreaDescription.setText(
                             "Id renta: " + selectedRental.getId()
-                            + "\nPelicula: " + selectedRental.getIdMovie()
-                            + "\nCliente: " + selectedRental.getIdCustomer()
+                            + "\nPelicula: " + referencedMovie.getTitle() + " " + selectedRental.getIdMovie()
+                            + "\nCliente: " + referencedCustomer.getName() + " " + referencedCustomer.getLastName() + " " + selectedRental.getIdCustomer()
                             + "\nDía de prestamo: " + selectedRental.getRentalDate()
                             + "\nDía de retorno: " + selectedRental.getReturnDate()
                             + "\nPrecio: " + selectedRental.getTotalCost()
@@ -56,30 +71,6 @@ public final class JFListRental extends javax.swing.JFrame {
 
             }
         });
-    }
-
-    public List<Rental> loadRentalsFromCSV(String filePath) {
-
-        List<Rental> rentalsMovieModel = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                if (values.length == 7) {
-                    String idRental = values[0];
-                    String idMovie = selectedItem(values[1], blockbusterOperation.getMoviesTableFilePath(), 1);
-                    String IdCustomer = selectedItem(values[2], blockbusterOperation.getCustomersTableFilePath(), 2);
-                    LocalDate rentalDate = LocalDate.parse(values[3]);
-                    LocalDate returnDate = LocalDate.parse(values[4]);
-                    double price = Double.parseDouble(values[5]);
-                    rentalsMovieModel.add(new Rental(idRental, idMovie, IdCustomer, rentalDate, returnDate, price, false));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
-        }
-        return rentalsMovieModel;
     }
 
     public String selectedItem(String idSelected, String filePath, int identifier) {

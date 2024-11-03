@@ -4,11 +4,7 @@
  */
 package blockbusterextremeviewer;
 
-import blockbusterextremeviewer.classes.Customer;
-import blockbusterextremeviewer.classes.Movie;
-import blockbusterextremeviewer.classes.Operation;
-import blockbusterextremeviewer.classes.Rental;
-import java.util.ArrayList;
+import blockbusterextremeviewerui.MainView;
 
 /**
  *
@@ -21,18 +17,9 @@ public class BlockbusterExtremeViewer {
      */
     public static void main(String[] args) {
         
-        Operation blockbusterOperation = new Operation();
+        MainView mainView = new MainView();
+        mainView.setVisible(true);
         
-        //Load previous records
-        ArrayList<Customer> customers = blockbusterOperation.getCustomers();
-        ArrayList<Movie> movies = blockbusterOperation.getMovies();
-        ArrayList<Rental> rentals = blockbusterOperation.getRentals();
-        
-        blockbusterOperation.createCustomer("12345678901", "Ernesto", "Pérez", "ernesto.perez@udea.edu.co", 18, "3015149087");
-        blockbusterOperation.createMovie(6500.00, "Movie name", "Movie genre", 1997, "DVD", "Movie director", "Movie cast", "Movie language");
-        blockbusterOperation.createRental("id Movie", "id customer");
-        
-        System.out.println("Operation finished!");
     }
     
 }

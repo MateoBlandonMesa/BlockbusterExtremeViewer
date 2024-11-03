@@ -18,20 +18,41 @@ import javax.swing.JOptionPane;
  */
 public class JFNewRental extends javax.swing.JFrame {
 
-    Operation blockbusterOperation = new Operation();
+    private MainView parent;
 
     /**
      * Creates new form JFCliente
      */
-    public JFNewRental() {
+        public JFNewRental() {
 
         initComponents();
-
+        
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
+    }
+    
+    public JFNewRental(MainView parent) {
 
-        jComboBoxPelicula.setModel(loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath()));
-        jComboBoxCliente.setModel(loadCostumerFromCSV(blockbusterOperation.getCustomersTableFilePath()));
+        initComponents();
+        
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.parent = parent;
+        
+        DefaultComboBoxModel<Movie> modeloPeliculas = new DefaultComboBoxModel<>();
+        modeloPeliculas.addElement(new Movie("", 0, "Selecciona una película", " ", 0, "", "", "", "")); // Elemento por defecto
+        for (Movie movie : parent.blockbusterOperation.getMovies()) {
+            modeloPeliculas.addElement(movie);
+        }
+        
+        DefaultComboBoxModel<Customer> customerModel = new DefaultComboBoxModel<>();
+        customerModel.addElement(new Customer("", "Selecciona un cliente", "", "", 1, ""));
+        for (Customer customer : parent.blockbusterOperation.getCustomers()) {
+            customerModel.addElement(customer);
+        }
+
+        jComboBoxPelicula.setModel(modeloPeliculas);
+        jComboBoxCliente.setModel(customerModel);
 
     }
 
@@ -125,67 +146,17 @@ public class JFNewRental extends javax.swing.JFrame {
             return;
         }
 
-        blockbusterOperation.createRental(selectedMovie.getId(), selectedCostumer.getId());
+        parent.blockbusterOperation.createRental(selectedMovie.getId(), selectedCostumer.getId());
+        parent.dispose(); // Close oarent form
+        new MainView().setVisible(true); // Restrart parent form
+        dispose(); // Close child form
         JOptionPane.showMessageDialog(this, "Renta creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jComboBoxPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPeliculaActionPerformed
     }//GEN-LAST:event_jComboBoxPeliculaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    private DefaultComboBoxModel<Movie> loadMoviesFromCSV(String rutaArchivo) {
-        DefaultComboBoxModel<Movie> modeloPeliculas = new DefaultComboBoxModel<>();
-        modeloPeliculas.addElement(new Movie("", 0, "Selecciona una película", " ", 0, "", "", "", "")); // Elemento por defecto
 
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                if (values.length == 9) {
-                    String id = values[0];
-                    double price = Double.parseDouble(values[1]);
-                    String title = values[2];
-                    String genre = values[3];
-                    int year = Integer.parseInt(values[4]);
-                    String format = values[5];
-                    String director = values[6];
-                    String cast = values[7];
-                    String language = values[8];
-                    modeloPeliculas.addElement(new Movie(id, price, title, genre, year, format, director, cast, language));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
-        }
-        return modeloPeliculas;
-    }
-
-    private DefaultComboBoxModel<Customer> loadCostumerFromCSV(String rutaArchivo) {
-        DefaultComboBoxModel<Customer> customerModel = new DefaultComboBoxModel<>();
-        customerModel.addElement(new Customer("", "Selecciona un cliente", "", "", 1, ""));
-
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                if (values.length == 6) {
-                    String id = values[0];
-                    String name = values[1];
-                    String lastName = values[2];
-                    String email = values[3];
-                    int age = Integer.parseInt(values[4]);
-                    String contactNumber = values[5];
-                    customerModel.addElement(new Customer(id, name, lastName, email, age, contactNumber));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
-        }
-
-        return customerModel;
-    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

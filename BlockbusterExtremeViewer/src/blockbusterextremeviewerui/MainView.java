@@ -4,8 +4,10 @@
  */
 package blockbusterextremeviewerui;
 
+import blockbusterextremeviewer.classes.Customer;
 import blockbusterextremeviewer.classes.Movie;
 import blockbusterextremeviewer.classes.Operation;
+import blockbusterextremeviewer.classes.Rental;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -17,8 +19,14 @@ import javax.swing.DefaultListModel;
  * @author blandonm
  */
 public final class MainView extends javax.swing.JFrame {
+    
+    public Operation blockbusterOperation;
+    
+    private ArrayList<Movie> movies;
 
-    Operation blockbusterOperation = new Operation();
+    private ArrayList<Customer> customers;
+
+    private ArrayList<Rental> rentals;
 
     /**
      * Creates new form MainView
@@ -28,7 +36,13 @@ public final class MainView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        List<Movie> movies = loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath());
+        
+        this.blockbusterOperation = new Operation();
+        
+        //Load previous records
+        this.customers = blockbusterOperation.getCustomers();
+        this.movies = blockbusterOperation.getMovies();
+        this.rentals = blockbusterOperation.getRentals();
 
         for (Movie movie : movies) {
             listModel.addElement(movie.getTitle()); // Usa el atributo que deseas mostrar, aquí es el título
@@ -53,33 +67,6 @@ public final class MainView extends javax.swing.JFrame {
 
             }
         });
-    }
-
-    public List<Movie> loadMoviesFromCSV(String filePath) {
-
-        List<Movie> moviesModel = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                if (values.length == 9) {
-                    String id = values[0];
-                    double price = Double.parseDouble(values[1]);
-                    String title = values[2];
-                    String genre = values[3];
-                    int year = Integer.parseInt(values[4]);
-                    String format = values[5];
-                    String director = values[6];
-                    String cast = values[7];
-                    String language = values[8];
-                    moviesModel.add(new Movie(id, price, title, genre, year, format, director, cast, language));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
-        }
-        return moviesModel;
     }
 
     /**
@@ -252,27 +239,29 @@ public final class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMovieMenuItemActionPerformed
-        JFNewMovie newMovie = new JFNewMovie();
+        JFNewMovie newMovie = new JFNewMovie(this);
         newMovie.setVisible(true);
+        this.revalidate();
+        this.repaint();
     }//GEN-LAST:event_newMovieMenuItemActionPerformed
 
     private void newCostumerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCostumerMenuItemActionPerformed
-        JFNewCostumer newCostumer = new JFNewCostumer();
+        JFNewCostumer newCostumer = new JFNewCostumer(this);
         newCostumer.setVisible(true);
     }//GEN-LAST:event_newCostumerMenuItemActionPerformed
 
     private void newRentalMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRentalMenuItemActionPerformed
-        JFNewRental newRental = new JFNewRental();
+        JFNewRental newRental = new JFNewRental(this);
         newRental.setVisible(true);
     }//GEN-LAST:event_newRentalMenuItemActionPerformed
 
     private void listOfCostumersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfCostumersMenuItemActionPerformed
-        JFListCustomers newListCostumers = new JFListCustomers();
+        JFListCustomers newListCostumers = new JFListCustomers(this);
         newListCostumers.setVisible(true);
     }//GEN-LAST:event_listOfCostumersMenuItemActionPerformed
 
     private void listOfRentalsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfRentalsMenuItemActionPerformed
-        JFListRental newListRental = new JFListRental();
+        JFListRental newListRental = new JFListRental(this);
         newListRental.setVisible(true);
     }//GEN-LAST:event_listOfRentalsMenuItemActionPerformed
 
