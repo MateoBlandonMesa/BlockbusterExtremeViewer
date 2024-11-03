@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/MDIApplication.java to edit this template
  */
-package blackbusterextremeviewerui;
+package blockbusterextremeviewerui;
 
-import blockbusterextremeviewer.classes.Customer;
+import blockbusterextremeviewer.classes.Movie;
 import blockbusterextremeviewer.classes.Operation;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,39 +16,38 @@ import javax.swing.DefaultListModel;
  *
  * @author blandonm
  */
-public final class JFListCustomers extends javax.swing.JFrame {
+public final class MainView extends javax.swing.JFrame {
 
     Operation blockbusterOperation = new Operation();
 
     /**
      * Creates new form MainView
      */
-    public JFListCustomers() {
+    public MainView() {
         initComponents();
-
-        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        List<Customer> customers = loadCustomersFromCSV(blockbusterOperation.getCustomersTableFilePath());
+        List<Movie> movies = loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath());
 
-        for (Customer costumer : customers) {
-            listModel.addElement(costumer.getName() + " " + costumer.getLastName()); // Usa el atributo que deseas mostrar, aquí es el título
+        for (Movie movie : movies) {
+            listModel.addElement(movie.getTitle()); // Usa el atributo que deseas mostrar, aquí es el título
         }
-        jListCostumer.setModel(listModel);
+        jListMovies.setModel(listModel);
 
-        jListCostumer.addListSelectionListener(e -> {
+        jListMovies.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedIndex = jListCostumer.getSelectedIndex();
+                int selectedIndex = jListMovies.getSelectedIndex();
                 if (selectedIndex != -1) {
-                    Customer selectedCostumer = customers.get(selectedIndex);
+                    Movie selectedMovie = movies.get(selectedIndex);
                     jTextAreaDescription.setText(
-                            "Cédula: " + selectedCostumer.getId()
-                            + "\nNombre: " + selectedCostumer.getName()
-                            + "\nApellido: " + selectedCostumer.getLastName()
-                            + "\nEdad: " + selectedCostumer.getAge()
-                            + "\nCorreo: " + selectedCostumer.getEmail()
-                            + "\nNúmero: " + selectedCostumer.getContactNumber()
+                            "Título: " + selectedMovie.getTitle()
+                            + "\nGénero: " + selectedMovie.getGenre()
+                            + "\nAño: " + selectedMovie.getYear()
+                            + "\nFormato: " + selectedMovie.getFormat()
+                            + "\nDirector: " + selectedMovie.getDirector()
+                            + "\nIdioma: " + selectedMovie.getLanguage()
+                            + "\nReparto: " + selectedMovie.getCast()
                     );
                 }
 
@@ -56,28 +55,31 @@ public final class JFListCustomers extends javax.swing.JFrame {
         });
     }
 
-    public List<Customer> loadCustomersFromCSV(String filePath) {
+    public List<Movie> loadMoviesFromCSV(String filePath) {
 
-        List<Customer> customerModel = new ArrayList<>();
+        List<Movie> moviesModel = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
-                if (values.length == 6) {
+                if (values.length == 9) {
                     String id = values[0];
-                    String name = values[1];
-                    String lastName = values[2];
-                    String email = values[3];
-                    int age = Integer.parseInt(values[4]);
-                    String contactNumber = values[5];
-                    customerModel.add(new Customer(id, name, lastName, email, age, contactNumber));
+                    double price = Double.parseDouble(values[1]);
+                    String title = values[2];
+                    String genre = values[3];
+                    int year = Integer.parseInt(values[4]);
+                    String format = values[5];
+                    String director = values[6];
+                    String cast = values[7];
+                    String language = values[8];
+                    moviesModel.add(new Movie(id, price, title, genre, year, format, director, cast, language));
                 }
             }
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
         }
-        return customerModel;
+        return moviesModel;
     }
 
     /**
@@ -95,21 +97,21 @@ public final class JFListCustomers extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabelCostumer = new javax.swing.JLabel();
+        jLabelMovies = new javax.swing.JLabel();
         jLabelDescription = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListCostumer = new javax.swing.JList<>();
+        jListMovies = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         newMovieMenuItem = new javax.swing.JMenuItem();
         newCostumerMenuItem = new javax.swing.JMenuItem();
-        seeMenu = new javax.swing.JMenu();
+        seeMen = new javax.swing.JMenu();
         listOfCostumersMenuItem = new javax.swing.JMenuItem();
         listOfRentalsMenuItem = new javax.swing.JMenuItem();
-        alquileresMenu = new javax.swing.JMenu();
-        newRentalsMenuItem = new javax.swing.JMenuItem();
+        rentalsMenu = new javax.swing.JMenu();
+        newRentalMenuItem = new javax.swing.JMenuItem();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -150,17 +152,17 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 50));
 
-        jLabelCostumer.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabelCostumer.setText("Clientes disponibles");
-        bg.add(jLabelCostumer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jLabelMovies.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabelMovies.setText("Peliculas disponibles");
+        bg.add(jLabelMovies, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         jLabelDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabelDescription.setText("Información Adicional");
+        jLabelDescription.setText("Descripción");
         bg.add(jLabelDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, -1, -1));
 
-        jListCostumer.setBorder(null);
-        jListCostumer.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(jListCostumer);
+        jListMovies.setBorder(null);
+        jListMovies.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(jListMovies);
 
         bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 270, 300));
 
@@ -196,8 +198,8 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
         menuBar.add(menuFile);
 
-        seeMenu.setMnemonic('e');
-        seeMenu.setText("Ver");
+        seeMen.setMnemonic('e');
+        seeMen.setText("Ver");
 
         listOfCostumersMenuItem.setMnemonic('y');
         listOfCostumersMenuItem.setText("Lista de clientes");
@@ -206,7 +208,7 @@ public final class JFListCustomers extends javax.swing.JFrame {
                 listOfCostumersMenuItemActionPerformed(evt);
             }
         });
-        seeMenu.add(listOfCostumersMenuItem);
+        seeMen.add(listOfCostumersMenuItem);
 
         listOfRentalsMenuItem.setMnemonic('a');
         listOfRentalsMenuItem.setText("Lista de alquileres");
@@ -215,23 +217,23 @@ public final class JFListCustomers extends javax.swing.JFrame {
                 listOfRentalsMenuItemActionPerformed(evt);
             }
         });
-        seeMenu.add(listOfRentalsMenuItem);
+        seeMen.add(listOfRentalsMenuItem);
 
-        menuBar.add(seeMenu);
+        menuBar.add(seeMen);
 
-        alquileresMenu.setMnemonic('h');
-        alquileresMenu.setText("Alquileres");
+        rentalsMenu.setMnemonic('h');
+        rentalsMenu.setText("Alquileres");
 
-        newRentalsMenuItem.setMnemonic('c');
-        newRentalsMenuItem.setText("Nuevo alquiler");
-        newRentalsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        newRentalMenuItem.setMnemonic('c');
+        newRentalMenuItem.setText("Nuevo alquiler");
+        newRentalMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newRentalsMenuItemActionPerformed(evt);
+                newRentalMenuItemActionPerformed(evt);
             }
         });
-        alquileresMenu.add(newRentalsMenuItem);
+        rentalsMenu.add(newRentalMenuItem);
 
-        menuBar.add(alquileresMenu);
+        menuBar.add(rentalsMenu);
 
         setJMenuBar(menuBar);
 
@@ -243,26 +245,26 @@ public final class JFListCustomers extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newRentalsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRentalsMenuItemActionPerformed
-        JFNewRental newRental = new JFNewRental();
-        newRental.setVisible(true);
-    }//GEN-LAST:event_newRentalsMenuItemActionPerformed
+    private void newMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMovieMenuItemActionPerformed
+        JFNewMovie newMovie = new JFNewMovie();
+        newMovie.setVisible(true);
+    }//GEN-LAST:event_newMovieMenuItemActionPerformed
 
     private void newCostumerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCostumerMenuItemActionPerformed
         JFNewCostumer newCostumer = new JFNewCostumer();
         newCostumer.setVisible(true);
     }//GEN-LAST:event_newCostumerMenuItemActionPerformed
 
-    private void newMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMovieMenuItemActionPerformed
-        JFNewMovie newMovie = new JFNewMovie();
-        newMovie.setVisible(true);
-    }//GEN-LAST:event_newMovieMenuItemActionPerformed
+    private void newRentalMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRentalMenuItemActionPerformed
+        JFNewRental newRental = new JFNewRental();
+        newRental.setVisible(true);
+    }//GEN-LAST:event_newRentalMenuItemActionPerformed
 
     private void listOfCostumersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfCostumersMenuItemActionPerformed
         JFListCustomers newListCostumers = new JFListCustomers();
@@ -270,8 +272,8 @@ public final class JFListCustomers extends javax.swing.JFrame {
     }//GEN-LAST:event_listOfCostumersMenuItemActionPerformed
 
     private void listOfRentalsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfRentalsMenuItemActionPerformed
-        JFListCustomers newListCostumers = new JFListCustomers();
-        newListCostumers.setVisible(true);
+        JFListRental newListRental = new JFListRental();
+        newListRental.setVisible(true);
     }//GEN-LAST:event_listOfRentalsMenuItemActionPerformed
 
     /**
@@ -291,32 +293,30 @@ public final class JFListCustomers extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new JFListCustomers().setVisible(true);
+            new MainView().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu alquileresMenu;
     private javax.swing.JPanel bg;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelCostumer;
     private javax.swing.JLabel jLabelDescription;
-    private javax.swing.JList<String> jListCostumer;
+    private javax.swing.JLabel jLabelMovies;
+    private javax.swing.JList<String> jListMovies;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -328,8 +328,9 @@ public final class JFListCustomers extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem newCostumerMenuItem;
     private javax.swing.JMenuItem newMovieMenuItem;
-    private javax.swing.JMenuItem newRentalsMenuItem;
-    private javax.swing.JMenu seeMenu;
+    private javax.swing.JMenuItem newRentalMenuItem;
+    private javax.swing.JMenu rentalsMenu;
+    private javax.swing.JMenu seeMen;
     // End of variables declaration//GEN-END:variables
 
 }
