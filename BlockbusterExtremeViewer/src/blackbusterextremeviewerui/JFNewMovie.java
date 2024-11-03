@@ -5,6 +5,7 @@
 package blackbusterextremeviewerui;
 
 import blockbusterextremeviewer.classes.Operation;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,14 +13,12 @@ import javax.swing.JOptionPane;
  * @author sarai
  */
 public class JFNewMovie extends javax.swing.JFrame {
-//String id, double price, String title, String genre, int year, String format, String director, String cast, String language
 
     /**
      * Creates new form JFCliente
      */
     public JFNewMovie() {
         initComponents();
-        // Esto siempre se hace para la navegacion
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
     }
@@ -65,6 +64,11 @@ public class JFNewMovie extends javax.swing.JFrame {
         jTextFieldTitle.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldTitle.setText("Titulo");
         jTextFieldTitle.setBorder(null);
+        jTextFieldTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldTitleMousePressed(evt);
+            }
+        });
         jTextFieldTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTitleActionPerformed(evt);
@@ -76,12 +80,22 @@ public class JFNewMovie extends javax.swing.JFrame {
         jTextFieldGenre.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldGenre.setText("Genero");
         jTextFieldGenre.setBorder(null);
+        jTextFieldGenre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldGenreMouseClicked(evt);
+            }
+        });
         bg.add(jTextFieldGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 300, 30));
 
         jTextFieldYear.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTextFieldYear.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldYear.setText("Año");
         jTextFieldYear.setBorder(null);
+        jTextFieldYear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldYearMousePressed(evt);
+            }
+        });
         jTextFieldYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldYearActionPerformed(evt);
@@ -94,6 +108,11 @@ public class JFNewMovie extends javax.swing.JFrame {
         jComboBoxFormat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Formato", "DVD", "VHS", "Blu-ray" }));
         jComboBoxFormat.setToolTipText("");
         jComboBoxFormat.setBorder(null);
+        jComboBoxFormat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jComboBoxFormatMousePressed(evt);
+            }
+        });
         jComboBoxFormat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFormatActionPerformed(evt);
@@ -105,6 +124,11 @@ public class JFNewMovie extends javax.swing.JFrame {
         jTextFieldDirector.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldDirector.setText("Director");
         jTextFieldDirector.setBorder(null);
+        jTextFieldDirector.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldDirectorMousePressed(evt);
+            }
+        });
         jTextFieldDirector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldDirectorActionPerformed(evt);
@@ -128,6 +152,11 @@ public class JFNewMovie extends javax.swing.JFrame {
         jTextFieldCast.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldCast.setText("Reparto");
         jTextFieldCast.setBorder(null);
+        jTextFieldCast.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldCastMousePressed(evt);
+            }
+        });
         bg.add(jTextFieldCast, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 300, 30));
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
@@ -227,6 +256,144 @@ public class JFNewMovie extends javax.swing.JFrame {
     private void jComboBoxLanguajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLanguajeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxLanguajeActionPerformed
+
+    private void jTextFieldTitleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTitleMousePressed
+        if (jTextFieldTitle.getText().equals("Titulo")) {
+            jTextFieldTitle.setText("");
+            jTextFieldTitle.setForeground(Color.black);
+        }
+        if (jTextFieldGenre.getText().isEmpty()) {
+            jTextFieldGenre.setText("Genero");
+            jTextFieldGenre.setForeground(Color.gray);
+        }
+
+        if (jTextFieldYear.getText().isEmpty()) {
+            jTextFieldYear.setText("Año");
+            jTextFieldYear.setForeground(Color.gray);
+        }
+
+        if (jTextFieldDirector.getText().isEmpty()) {
+            jTextFieldDirector.setText("Director");
+            jTextFieldDirector.setForeground(Color.gray);
+        }
+
+        if (jTextFieldCast.getText().isEmpty()) {
+            jTextFieldCast.setText("Reparto");
+            jTextFieldCast.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldTitleMousePressed
+
+    private void jTextFieldGenreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldGenreMouseClicked
+        if (jTextFieldGenre.getText().equals("Genero")) {
+            jTextFieldGenre.setText("");
+            jTextFieldGenre.setForeground(Color.black);
+        }
+
+        if (jTextFieldTitle.getText().isEmpty()) {
+            jTextFieldTitle.setText("Titulo");
+            jTextFieldTitle.setForeground(Color.gray);
+        }
+
+        if (jTextFieldYear.getText().isEmpty()) {
+            jTextFieldYear.setText("Año");
+            jTextFieldYear.setForeground(Color.gray);
+        }
+
+        if (jTextFieldDirector.getText().isEmpty()) {
+            jTextFieldDirector.setText("Director");
+            jTextFieldDirector.setForeground(Color.gray);
+        }
+
+        if (jTextFieldCast.getText().isEmpty()) {
+            jTextFieldCast.setText("Reparto");
+            jTextFieldCast.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldGenreMouseClicked
+
+    private void jTextFieldYearMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldYearMousePressed
+        if (jTextFieldYear.getText().equals("Año")) {
+            jTextFieldYear.setText("");
+            jTextFieldYear.setForeground(Color.black);
+        }
+
+        if (jTextFieldTitle.getText().isEmpty()) {
+            jTextFieldTitle.setText("Titulo");
+            jTextFieldTitle.setForeground(Color.gray);
+        }
+
+        if (jTextFieldGenre.getText().isEmpty()) {
+            jTextFieldGenre.setText("Genero");
+            jTextFieldGenre.setForeground(Color.gray);
+        }
+
+        if (jTextFieldDirector.getText().isEmpty()) {
+            jTextFieldDirector.setText("Director");
+            jTextFieldDirector.setForeground(Color.gray);
+        }
+
+        if (jTextFieldCast.getText().isEmpty()) {
+            jTextFieldCast.setText("Reparto");
+            jTextFieldCast.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldYearMousePressed
+
+    private void jComboBoxFormatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxFormatMousePressed
+
+    }//GEN-LAST:event_jComboBoxFormatMousePressed
+
+    private void jTextFieldDirectorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDirectorMousePressed
+        if (jTextFieldDirector.getText().equals("Director")) {
+            jTextFieldDirector.setText("");
+            jTextFieldDirector.setForeground(Color.gray);
+        }
+
+        if (jTextFieldTitle.getText().isEmpty()) {
+            jTextFieldTitle.setText("Titulo");
+            jTextFieldTitle.setForeground(Color.gray);
+        }
+
+        if (jTextFieldGenre.getText().isEmpty()) {
+            jTextFieldGenre.setText("Genero");
+            jTextFieldGenre.setForeground(Color.gray);
+        }
+
+        if (jTextFieldYear.getText().isEmpty()) {
+            jTextFieldYear.setText("Año");
+            jTextFieldYear.setForeground(Color.gray);
+        }
+
+        if (jTextFieldCast.getText().isEmpty()) {
+            jTextFieldCast.setText("Reparto");
+            jTextFieldCast.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldDirectorMousePressed
+
+    private void jTextFieldCastMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldCastMousePressed
+        if (jTextFieldCast.getText().equals("Reparto")) {
+            jTextFieldCast.setText("");
+            jTextFieldCast.setForeground(Color.gray);
+        }
+
+        if (jTextFieldTitle.getText().isEmpty()) {
+            jTextFieldTitle.setText("Titulo");
+            jTextFieldTitle.setForeground(Color.gray);
+        }
+
+        if (jTextFieldGenre.getText().isEmpty()) {
+            jTextFieldGenre.setText("Genero");
+            jTextFieldGenre.setForeground(Color.gray);
+        }
+
+        if (jTextFieldYear.getText().isEmpty()) {
+            jTextFieldYear.setText("Año");
+            jTextFieldYear.setForeground(Color.gray);
+        }
+
+        if (jTextFieldDirector.getText().isEmpty()) {
+            jTextFieldDirector.setText("Director");
+            jTextFieldDirector.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldCastMousePressed
 
     /**
      * @param args the command line arguments

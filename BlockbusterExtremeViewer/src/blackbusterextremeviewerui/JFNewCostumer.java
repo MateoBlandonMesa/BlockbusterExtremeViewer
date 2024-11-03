@@ -4,7 +4,11 @@
  */
 package blackbusterextremeviewerui;
 
+import blockbusterextremeviewer.classes.Customer;
 import blockbusterextremeviewer.classes.Operation;
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class JFNewCostumer extends javax.swing.JFrame {
 
+    Operation blockbusterOperation = new Operation();
+
     /**
      * Creates new form JFCliente
      */
     public JFNewCostumer() {
         initComponents();
-        // Esto siempre se hace para la navegacion
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
     }
@@ -62,18 +67,33 @@ public class JFNewCostumer extends javax.swing.JFrame {
         jTextFieldId.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldId.setText("CC");
         jTextFieldId.setBorder(null);
+        jTextFieldId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldIdMousePressed(evt);
+            }
+        });
         bg.add(jTextFieldId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 300, 30));
 
         jTextFieldName.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTextFieldName.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldName.setText("Nombre");
         jTextFieldName.setBorder(null);
+        jTextFieldName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldNameMousePressed(evt);
+            }
+        });
         bg.add(jTextFieldName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 300, 30));
 
         jTextFieldLastName.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTextFieldLastName.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldLastName.setText("Apellido");
         jTextFieldLastName.setBorder(null);
+        jTextFieldLastName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldLastNameMousePressed(evt);
+            }
+        });
         jTextFieldLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldLastNameActionPerformed(evt);
@@ -85,12 +105,22 @@ public class JFNewCostumer extends javax.swing.JFrame {
         jTextFieldAge.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldAge.setText("Edad");
         jTextFieldAge.setBorder(null);
+        jTextFieldAge.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTextFieldAgeMouseEntered(evt);
+            }
+        });
         bg.add(jTextFieldAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 300, 30));
 
         jTextFieldEmail.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTextFieldEmail.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldEmail.setText("Correo");
         jTextFieldEmail.setBorder(null);
+        jTextFieldEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldEmailMousePressed(evt);
+            }
+        });
         jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldEmailActionPerformed(evt);
@@ -102,6 +132,11 @@ public class JFNewCostumer extends javax.swing.JFrame {
         jTextFieldNumber.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldNumber.setText("Telefono");
         jTextFieldNumber.setBorder(null);
+        jTextFieldNumber.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextFieldNumberMousePressed(evt);
+            }
+        });
         bg.add(jTextFieldNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 300, 30));
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
@@ -158,30 +193,231 @@ public class JFNewCostumer extends javax.swing.JFrame {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 
         try {
-            String id = jTextFieldId.getText();
+            int id = Integer.parseInt(jTextFieldId.getText());
             String name = jTextFieldName.getText();
             String lastName = jTextFieldLastName.getText();
-            String number = jTextFieldNumber.getText();
+            int number = Integer.parseInt(jTextFieldNumber.getText());
             int age = Integer.parseInt(jTextFieldAge.getText());
             String email = jTextFieldEmail.getText();
-            int contactNumber = Integer.parseInt(jTextFieldNumber.getText());
 
-            if (id.equals("CC") || name.equals("Nombre") || lastName.equals("Apellido") || email.equals("Correo")) {
-                JOptionPane.showMessageDialog(this, "Por favor verifica los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            if (name.equals("Nombre") || lastName.equals("Apellido") || email.equals("Correo")) {
+                JOptionPane.showMessageDialog(this, "Por favor rellena todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (existVerify(Integer.toString(id)) == true) {
+                JOptionPane.showMessageDialog(this, "Ya existe el cliente", "Información", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                Operation blockbusterOperation = new Operation();
-                blockbusterOperation.createCustomer(id, name, lastName, email, age, number);
+                blockbusterOperation.createCustomer(Integer.toString(id), name, lastName, email, age, Integer.toString(number));
                 JOptionPane.showMessageDialog(this, "Pelicula creada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Por favor ingresa un valor numerico valido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor ingresa solo valores numericos validos", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
+    public boolean existVerify(String idCustomer) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(blockbusterOperation.getCustomersTableFilePath()))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+                return values[0].equals(idCustomer);
+            }
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al buscar el id del cliente: " + e.getMessage());
+        }
+        return true;
+    }
+
     private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldEmailActionPerformed
+
+    private void jTextFieldIdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldIdMousePressed
+        if (jTextFieldId.getText().equals("CC")) {
+            jTextFieldId.setText("");
+            jTextFieldId.setForeground(Color.black);
+        }
+        if (jTextFieldName.getText().isEmpty()) {
+            jTextFieldName.setText("Nombre");
+            jTextFieldName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldLastName.getText().isEmpty()) {
+            jTextFieldLastName.setText("Apellido");
+            jTextFieldLastName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldAge.getText().isEmpty()) {
+            jTextFieldAge.setText("Edad");
+            jTextFieldAge.setForeground(Color.gray);
+        }
+
+        if (jTextFieldEmail.getText().isEmpty()) {
+            jTextFieldEmail.setText("Correo");
+            jTextFieldEmail.setForeground(Color.gray);
+        }
+
+        if (jTextFieldNumber.getText().isEmpty()) {
+            jTextFieldNumber.setText("Telefono");
+            jTextFieldNumber.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldIdMousePressed
+
+    private void jTextFieldNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNameMousePressed
+        if (jTextFieldName.getText().equals("Nombre")) {
+            jTextFieldName.setText("");
+            jTextFieldName.setForeground(Color.black);
+        }
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+
+        if (jTextFieldLastName.getText().isEmpty()) {
+            jTextFieldLastName.setText("Apellido");
+            jTextFieldLastName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldAge.getText().isEmpty()) {
+            jTextFieldAge.setText("Edad");
+            jTextFieldAge.setForeground(Color.gray);
+        }
+
+        if (jTextFieldEmail.getText().isEmpty()) {
+            jTextFieldEmail.setText("Correo");
+            jTextFieldEmail.setForeground(Color.gray);
+        }
+
+        if (jTextFieldNumber.getText().isEmpty()) {
+            jTextFieldNumber.setText("Telefono");
+            jTextFieldNumber.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldNameMousePressed
+
+    private void jTextFieldLastNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldLastNameMousePressed
+        if (jTextFieldLastName.getText().equals("Apellido")) {
+            jTextFieldLastName.setText("");
+            jTextFieldLastName.setForeground(Color.black);
+        }
+
+        if (jTextFieldName.getText().isEmpty()) {
+            jTextFieldName.setText("Nombre");
+            jTextFieldName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+
+        if (jTextFieldAge.getText().isEmpty()) {
+            jTextFieldAge.setText("Edad");
+            jTextFieldAge.setForeground(Color.gray);
+        }
+
+        if (jTextFieldEmail.getText().isEmpty()) {
+            jTextFieldEmail.setText("Correo");
+            jTextFieldEmail.setForeground(Color.gray);
+        }
+
+        if (jTextFieldNumber.getText().isEmpty()) {
+            jTextFieldNumber.setText("Telefono");
+            jTextFieldNumber.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldLastNameMousePressed
+
+    private void jTextFieldAgeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldAgeMouseEntered
+        if (jTextFieldAge.getText().equals("Edad")) {
+            jTextFieldAge.setText("");
+            jTextFieldAge.setForeground(Color.black);
+        }
+        if (jTextFieldName.getText().isEmpty()) {
+            jTextFieldName.setText("Nombre");
+            jTextFieldName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldLastName.getText().isEmpty()) {
+            jTextFieldLastName.setText("Apellido");
+            jTextFieldLastName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+
+        if (jTextFieldEmail.getText().isEmpty()) {
+            jTextFieldEmail.setText("Correo");
+            jTextFieldEmail.setForeground(Color.gray);
+        }
+
+        if (jTextFieldNumber.getText().isEmpty()) {
+            jTextFieldNumber.setText("Telefono");
+            jTextFieldNumber.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldAgeMouseEntered
+
+    private void jTextFieldEmailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldEmailMousePressed
+        if (jTextFieldEmail.getText().equals("Correo")) {
+            jTextFieldEmail.setText("");
+            jTextFieldEmail.setForeground(Color.black);
+        }
+        if (jTextFieldName.getText().isEmpty()) {
+            jTextFieldName.setText("Nombre");
+            jTextFieldName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldLastName.getText().isEmpty()) {
+            jTextFieldLastName.setText("Apellido");
+            jTextFieldLastName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldAge.getText().isEmpty()) {
+            jTextFieldAge.setText("Edad");
+            jTextFieldAge.setForeground(Color.gray);
+        }
+
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+
+        if (jTextFieldNumber.getText().isEmpty()) {
+            jTextFieldNumber.setText("Telefono");
+            jTextFieldNumber.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldEmailMousePressed
+
+    private void jTextFieldNumberMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNumberMousePressed
+        if (jTextFieldNumber.getText().equals("Telefono")) {
+            jTextFieldNumber.setText("");
+            jTextFieldNumber.setForeground(Color.black);
+        }
+        if (jTextFieldName.getText().isEmpty()) {
+            jTextFieldName.setText("Nombre");
+            jTextFieldName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldLastName.getText().isEmpty()) {
+            jTextFieldLastName.setText("Apellido");
+            jTextFieldLastName.setForeground(Color.gray);
+        }
+
+        if (jTextFieldAge.getText().isEmpty()) {
+            jTextFieldAge.setText("Edad");
+            jTextFieldAge.setForeground(Color.gray);
+        }
+
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+
+        if (jTextFieldId.getText().isEmpty()) {
+            jTextFieldId.setText("CC");
+            jTextFieldId.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jTextFieldNumberMousePressed
 
     /**
      * @param args the command line arguments

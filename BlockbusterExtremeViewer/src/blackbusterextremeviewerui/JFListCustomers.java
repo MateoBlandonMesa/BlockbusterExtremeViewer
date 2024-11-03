@@ -63,14 +63,14 @@ public final class JFListCustomers extends javax.swing.JFrame {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] valores = line.split(";");
-                if (valores.length == 6) {
-                    String id = valores[0];
-                    String name = valores[1];
-                    String lastName = valores[2];
-                    String email = valores[3];
-                    int age = Integer.parseInt(valores[4]);
-                    String contactNumber = valores[5];
+                String[] values = line.split(";");
+                if (values.length == 6) {
+                    String id = values[0];
+                    String name = values[1];
+                    String lastName = values[2];
+                    String email = values[3];
+                    int age = Integer.parseInt(values[4]);
+                    String contactNumber = values[5];
                     customerModel.add(new Customer(id, name, lastName, email, age, contactNumber));
                 }
             }
@@ -102,14 +102,14 @@ public final class JFListCustomers extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
-        archivoMenu = new javax.swing.JMenu();
-        nuevaPeliculaMenuItem = new javax.swing.JMenuItem();
-        nuevoClienteMenuItem = new javax.swing.JMenuItem();
-        verMenu = new javax.swing.JMenu();
-        listadeClientesMenuItem = new javax.swing.JMenuItem();
-        listaDeAlquileresMenuItem = new javax.swing.JMenuItem();
+        menuFile = new javax.swing.JMenu();
+        newMovieMenuItem = new javax.swing.JMenuItem();
+        newCostumerMenuItem = new javax.swing.JMenuItem();
+        seeMenu = new javax.swing.JMenu();
+        listOfCostumersMenuItem = new javax.swing.JMenuItem();
+        listOfRentalsMenuItem = new javax.swing.JMenuItem();
         alquileresMenu = new javax.swing.JMenu();
-        nuevoAlquilerMenuItem = new javax.swing.JMenuItem();
+        newRentalsMenuItem = new javax.swing.JMenuItem();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -173,53 +173,63 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
         bg.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 280, 300));
 
-        archivoMenu.setMnemonic('f');
-        archivoMenu.setText("Archivo");
+        menuFile.setMnemonic('f');
+        menuFile.setText("Archivo");
 
-        nuevaPeliculaMenuItem.setMnemonic('o');
-        nuevaPeliculaMenuItem.setText("Nueva película");
-        nuevaPeliculaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        newMovieMenuItem.setMnemonic('o');
+        newMovieMenuItem.setText("Nueva película");
+        newMovieMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevaPeliculaMenuItemActionPerformed(evt);
+                newMovieMenuItemActionPerformed(evt);
             }
         });
-        archivoMenu.add(nuevaPeliculaMenuItem);
+        menuFile.add(newMovieMenuItem);
 
-        nuevoClienteMenuItem.setMnemonic('s');
-        nuevoClienteMenuItem.setText("Nuevo cliente");
-        nuevoClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        newCostumerMenuItem.setMnemonic('s');
+        newCostumerMenuItem.setText("Nuevo cliente");
+        newCostumerMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevoClienteMenuItemActionPerformed(evt);
+                newCostumerMenuItemActionPerformed(evt);
             }
         });
-        archivoMenu.add(nuevoClienteMenuItem);
+        menuFile.add(newCostumerMenuItem);
 
-        menuBar.add(archivoMenu);
+        menuBar.add(menuFile);
 
-        verMenu.setMnemonic('e');
-        verMenu.setText("Ver");
+        seeMenu.setMnemonic('e');
+        seeMenu.setText("Ver");
 
-        listadeClientesMenuItem.setMnemonic('y');
-        listadeClientesMenuItem.setText("Lista de clientes");
-        verMenu.add(listadeClientesMenuItem);
+        listOfCostumersMenuItem.setMnemonic('y');
+        listOfCostumersMenuItem.setText("Lista de clientes");
+        listOfCostumersMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listOfCostumersMenuItemActionPerformed(evt);
+            }
+        });
+        seeMenu.add(listOfCostumersMenuItem);
 
-        listaDeAlquileresMenuItem.setMnemonic('a');
-        listaDeAlquileresMenuItem.setText("Lista de alquileres");
-        verMenu.add(listaDeAlquileresMenuItem);
+        listOfRentalsMenuItem.setMnemonic('a');
+        listOfRentalsMenuItem.setText("Lista de alquileres");
+        listOfRentalsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listOfRentalsMenuItemActionPerformed(evt);
+            }
+        });
+        seeMenu.add(listOfRentalsMenuItem);
 
-        menuBar.add(verMenu);
+        menuBar.add(seeMenu);
 
         alquileresMenu.setMnemonic('h');
         alquileresMenu.setText("Alquileres");
 
-        nuevoAlquilerMenuItem.setMnemonic('c');
-        nuevoAlquilerMenuItem.setText("Nuevo alquiler");
-        nuevoAlquilerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        newRentalsMenuItem.setMnemonic('c');
+        newRentalsMenuItem.setText("Nuevo alquiler");
+        newRentalsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevoAlquilerMenuItemActionPerformed(evt);
+                newRentalsMenuItemActionPerformed(evt);
             }
         });
-        alquileresMenu.add(nuevoAlquilerMenuItem);
+        alquileresMenu.add(newRentalsMenuItem);
 
         menuBar.add(alquileresMenu);
 
@@ -239,20 +249,30 @@ public final class JFListCustomers extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nuevoAlquilerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlquilerMenuItemActionPerformed
-        JFNewRental nuevaRenta = new JFNewRental();
-        nuevaRenta.setVisible(true);
-    }//GEN-LAST:event_nuevoAlquilerMenuItemActionPerformed
+    private void newRentalsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRentalsMenuItemActionPerformed
+        JFNewRental newRental = new JFNewRental();
+        newRental.setVisible(true);
+    }//GEN-LAST:event_newRentalsMenuItemActionPerformed
 
-    private void nuevoClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteMenuItemActionPerformed
-        JFNewCostumer nuevoCliente = new JFNewCostumer();
-        nuevoCliente.setVisible(true);
-    }//GEN-LAST:event_nuevoClienteMenuItemActionPerformed
+    private void newCostumerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCostumerMenuItemActionPerformed
+        JFNewCostumer newCostumer = new JFNewCostumer();
+        newCostumer.setVisible(true);
+    }//GEN-LAST:event_newCostumerMenuItemActionPerformed
 
-    private void nuevaPeliculaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPeliculaMenuItemActionPerformed
+    private void newMovieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMovieMenuItemActionPerformed
         JFNewMovie newMovie = new JFNewMovie();
         newMovie.setVisible(true);
-    }//GEN-LAST:event_nuevaPeliculaMenuItemActionPerformed
+    }//GEN-LAST:event_newMovieMenuItemActionPerformed
+
+    private void listOfCostumersMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfCostumersMenuItemActionPerformed
+        JFListCustomers newListCostumers = new JFListCustomers();
+        newListCostumers.setVisible(true);
+    }//GEN-LAST:event_listOfCostumersMenuItemActionPerformed
+
+    private void listOfRentalsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfRentalsMenuItemActionPerformed
+        JFListCustomers newListCostumers = new JFListCustomers();
+        newListCostumers.setVisible(true);
+    }//GEN-LAST:event_listOfRentalsMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,7 +310,6 @@ public final class JFListCustomers extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu alquileresMenu;
-    private javax.swing.JMenu archivoMenu;
     private javax.swing.JPanel bg;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
@@ -303,13 +322,14 @@ public final class JFListCustomers extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextAreaDescription;
-    private javax.swing.JMenuItem listaDeAlquileresMenuItem;
-    private javax.swing.JMenuItem listadeClientesMenuItem;
+    private javax.swing.JMenuItem listOfCostumersMenuItem;
+    private javax.swing.JMenuItem listOfRentalsMenuItem;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem nuevaPeliculaMenuItem;
-    private javax.swing.JMenuItem nuevoAlquilerMenuItem;
-    private javax.swing.JMenuItem nuevoClienteMenuItem;
-    private javax.swing.JMenu verMenu;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenuItem newCostumerMenuItem;
+    private javax.swing.JMenuItem newMovieMenuItem;
+    private javax.swing.JMenuItem newRentalsMenuItem;
+    private javax.swing.JMenu seeMenu;
     // End of variables declaration//GEN-END:variables
 
 }

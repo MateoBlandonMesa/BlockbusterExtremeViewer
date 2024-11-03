@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author sarai
  */
 public class JFNewRental extends javax.swing.JFrame {
-    
+
     Operation blockbusterOperation = new Operation();
 
     /**
@@ -142,17 +142,17 @@ public class JFNewRental extends javax.swing.JFrame {
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] valores = line.split(";");
-                if (valores.length == 9) {
-                    String id = valores[0];
-                    double price = Double.parseDouble(valores[1]);
-                    String title = valores[2];
-                    String genre = valores[3];
-                    int year = Integer.parseInt(valores[4]);
-                    String format = valores[5];
-                    String director = valores[6];
-                    String cast = valores[7];
-                    String language = valores[8];
+                String[] values = line.split(";");
+                if (values.length == 9) {
+                    String id = values[0];
+                    double price = Double.parseDouble(values[1]);
+                    String title = values[2];
+                    String genre = values[3];
+                    int year = Integer.parseInt(values[4]);
+                    String format = values[5];
+                    String director = values[6];
+                    String cast = values[7];
+                    String language = values[8];
                     modeloPeliculas.addElement(new Movie(id, price, title, genre, year, format, director, cast, language));
                 }
             }
@@ -164,19 +164,19 @@ public class JFNewRental extends javax.swing.JFrame {
 
     private DefaultComboBoxModel<Customer> loadCostumerFromCSV(String rutaArchivo) {
         DefaultComboBoxModel<Customer> customerModel = new DefaultComboBoxModel<>();
-        customerModel.addElement(new Customer("", "Selecciona un cliente", "", "", 1, "")); //Elemento por defecto
+        customerModel.addElement(new Customer("", "Selecciona un cliente", "", "", 1, ""));
 
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] valores = line.split(";");
-                if (valores.length == 6) {
-                    String id = valores[0];
-                    String name = valores[1];
-                    String lastName = valores[2];
-                    String email = valores[3];
-                    int age = Integer.parseInt(valores[4]);
-                    String contactNumber = valores[5];
+                String[] values = line.split(";");
+                if (values.length == 6) {
+                    String id = values[0];
+                    String name = values[1];
+                    String lastName = values[2];
+                    String email = values[3];
+                    int age = Integer.parseInt(values[4]);
+                    String contactNumber = values[5];
                     customerModel.addElement(new Customer(id, name, lastName, email, age, contactNumber));
                 }
             }
