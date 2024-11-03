@@ -4,10 +4,11 @@
  */
 package blackbusterextremeviewerui;
 
-import blockbusterextremeviewer.classes.Movie;
 import blockbusterextremeviewer.classes.Operation;
+import blockbusterextremeviewer.classes.Rental;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -16,38 +17,40 @@ import javax.swing.DefaultListModel;
  *
  * @author blandonm
  */
-public final class MainView extends javax.swing.JFrame {
+public class JFListRental extends javax.swing.JFrame {
 
     Operation blockbusterOperation = new Operation();
 
     /**
      * Creates new form MainView
      */
-    public MainView() {
+    public JFListRental() {
         initComponents();
+
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        List<Movie> movies = loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath());
+        List<Rental> rentals = loadRentalsFromCSV(blockbusterOperation.getRentalsTableFilePath());
 
-        for (Movie movie : movies) {
-            listModel.addElement(movie.getTitle()); // Usa el atributo que deseas mostrar, aquí es el título
+        for (Rental rental : rentals) {
+            listModel.addElement(rental.getId());
         }
-        jListMovies.setModel(listModel);
+        jListRentals.setModel(listModel);
 
-        jListMovies.addListSelectionListener(e -> {
+        jListRentals.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedIndex = jListMovies.getSelectedIndex();
+                int selectedIndex = jListRentals.getSelectedIndex();
                 if (selectedIndex != -1) {
-                    Movie selectedMovie = movies.get(selectedIndex);
+                    Rental selectedRental = rentals.get(selectedIndex);
                     jTextAreaDescription.setText(
-                            "Título: " + selectedMovie.getTitle()
-                            + "\nGénero: " + selectedMovie.getGenre()
-                            + "\nAño: " + selectedMovie.getYear()
-                            + "\nFormato: " + selectedMovie.getFormat()
-                            + "\nDirector: " + selectedMovie.getDirector()
-                            + "\nIdioma: " + selectedMovie.getLanguage()
-                            + "\nReparto: " + selectedMovie.getCast()
+                            "Id renta: " + selectedRental.getId()
+                            + "\nPelicula: " + selectedRental.getIdMovie()
+                            + "\nCliente: " + selectedRental.getIdCustomer()
+                            + "\nDía de prestamo: " + selectedRental.getRentalDate()
+                            + "\nDía de retorno: " + selectedRental.getReturnDate()
+                            + "\nPrecio: " + selectedRental.getTotalCost()
+                            + "\nRetornada: " + selectedRental.isMovieReturned()
                     );
                 }
 
@@ -55,31 +58,49 @@ public final class MainView extends javax.swing.JFrame {
         });
     }
 
-    public List<Movie> loadMoviesFromCSV(String filePath) {
+    public List<Rental> loadRentalsFromCSV(String filePath) {
 
-        List<Movie> moviesModel = new ArrayList<>();
+        List<Rental> rentalsMovieModel = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
-                if (values.length == 9) {
-                    String id = values[0];
-                    double price = Double.parseDouble(values[1]);
-                    String title = values[2];
-                    String genre = values[3];
-                    int year = Integer.parseInt(values[4]);
-                    String format = values[5];
-                    String director = values[6];
-                    String cast = values[7];
-                    String language = values[8];
-                    moviesModel.add(new Movie(id, price, title, genre, year, format, director, cast, language));
+                if (values.length == 7) {
+                    String idRental = values[0];
+                    String idMovie = selectedItem(values[1], blockbusterOperation.getMoviesTableFilePath(), 1);
+                    String IdCustomer = selectedItem(values[2], blockbusterOperation.getCustomersTableFilePath(), 2);
+                    LocalDate rentalDate = LocalDate.parse(values[3]);
+                    LocalDate returnDate = LocalDate.parse(values[4]);
+                    double price = Double.parseDouble(values[5]);
+                    rentalsMovieModel.add(new Rental(idRental, idMovie, IdCustomer, rentalDate, returnDate, price, false));
                 }
             }
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
         }
-        return moviesModel;
+        return rentalsMovieModel;
+    }
+
+    public String selectedItem(String idSelected, String filePath, int identifier) {
+
+        System.out.println(idSelected);
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(";");
+                if (fields[0].equals(idSelected)) {
+                    if (identifier == 1) {
+                        return fields[2];
+                    } else {
+                        return fields[1] + " " + fields[2];
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al buscar el nombre de la pelicula: " + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -97,10 +118,11 @@ public final class MainView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabelMovies = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabelRentals = new javax.swing.JLabel();
         jLabelDescription = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListMovies = new javax.swing.JList<>();
+        jListRentals = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
@@ -152,17 +174,20 @@ public final class MainView extends javax.swing.JFrame {
 
         bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 50));
 
-        jLabelMovies.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabelMovies.setText("Peliculas disponibles");
-        bg.add(jLabelMovies, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jButton1.setText("jButton1");
+        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, -1, -1));
+
+        jLabelRentals.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabelRentals.setText("Rentas disponibles");
+        bg.add(jLabelRentals, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         jLabelDescription.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabelDescription.setText("Descripción");
+        jLabelDescription.setText("Informacion adicional");
         bg.add(jLabelDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, -1, -1));
 
-        jListMovies.setBorder(null);
-        jListMovies.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(jListMovies);
+        jListRentals.setBorder(null);
+        jListRentals.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(jListRentals);
 
         bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 270, 300));
 
@@ -203,20 +228,10 @@ public final class MainView extends javax.swing.JFrame {
 
         listadeClientesMenuItem.setMnemonic('y');
         listadeClientesMenuItem.setText("Lista de clientes");
-        listadeClientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listadeClientesMenuItemActionPerformed(evt);
-            }
-        });
         verMenu.add(listadeClientesMenuItem);
 
         listaDeAlquileresMenuItem.setMnemonic('a');
         listaDeAlquileresMenuItem.setText("Lista de alquileres");
-        listaDeAlquileresMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaDeAlquileresMenuItemActionPerformed(evt);
-            }
-        });
         verMenu.add(listaDeAlquileresMenuItem);
 
         menuBar.add(verMenu);
@@ -257,24 +272,14 @@ public final class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevaPeliculaMenuItemActionPerformed
 
     private void nuevoClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteMenuItemActionPerformed
-        JFNewCostumer newCostumer = new JFNewCostumer();
-        newCostumer.setVisible(true);
+        JFNewCostumer nuevoCliente = new JFNewCostumer();
+        nuevoCliente.setVisible(true);
     }//GEN-LAST:event_nuevoClienteMenuItemActionPerformed
 
     private void nuevoAlquilerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlquilerMenuItemActionPerformed
-        JFNewRental newRental = new JFNewRental();
-        newRental.setVisible(true);
+        JFNewRental nuevaRenta = new JFNewRental();
+        nuevaRenta.setVisible(true);
     }//GEN-LAST:event_nuevoAlquilerMenuItemActionPerformed
-
-    private void listadeClientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listadeClientesMenuItemActionPerformed
-        JFListCustomers newListCostumers = new JFListCustomers();
-        newListCostumers.setVisible(true);
-    }//GEN-LAST:event_listadeClientesMenuItemActionPerformed
-
-    private void listaDeAlquileresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaDeAlquileresMenuItemActionPerformed
-        JFListRental newListRental = new JFListRental();
-        newListRental.setVisible(true);
-    }//GEN-LAST:event_listaDeAlquileresMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,19 +298,20 @@ public final class MainView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFListRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFListRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFListRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFListRental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MainView().setVisible(true);
+            new JFListRental().setVisible(true);
         });
     }
 
@@ -313,12 +319,13 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JMenu alquileresMenu;
     private javax.swing.JMenu archivoMenu;
     private javax.swing.JPanel bg;
+    private javax.swing.JButton jButton1;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDescription;
-    private javax.swing.JLabel jLabelMovies;
-    private javax.swing.JList<String> jListMovies;
+    private javax.swing.JLabel jLabelRentals;
+    private javax.swing.JList<String> jListRentals;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

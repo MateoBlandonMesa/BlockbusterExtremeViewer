@@ -30,8 +30,8 @@ public class JFNewRental extends javax.swing.JFrame {
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        jComboBoxPelicula.setModel(leerPeliculasDesdeCSV(blockbusterOperation.getMoviesTableFilePath()));
-        jComboBoxCliente.setModel(leerClientesDesdeCSV(blockbusterOperation.getCustomersTableFilePath()));
+        jComboBoxPelicula.setModel(loadMoviesFromCSV(blockbusterOperation.getMoviesTableFilePath()));
+        jComboBoxCliente.setModel(loadCostumerFromCSV(blockbusterOperation.getCustomersTableFilePath()));
 
     }
 
@@ -53,6 +53,7 @@ public class JFNewRental extends javax.swing.JFrame {
         jButtonGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -134,14 +135,14 @@ public class JFNewRental extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    private DefaultComboBoxModel<Movie> leerPeliculasDesdeCSV(String rutaArchivo) {
+    private DefaultComboBoxModel<Movie> loadMoviesFromCSV(String rutaArchivo) {
         DefaultComboBoxModel<Movie> modeloPeliculas = new DefaultComboBoxModel<>();
         modeloPeliculas.addElement(new Movie("", 0, "Selecciona una película", " ", 0, "", "", "", "")); // Elemento por defecto
 
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] valores = linea.split(";");
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] valores = line.split(";");
                 if (valores.length == 9) {
                     String id = valores[0];
                     double price = Double.parseDouble(valores[1]);
@@ -161,14 +162,14 @@ public class JFNewRental extends javax.swing.JFrame {
         return modeloPeliculas;
     }
 
-    private DefaultComboBoxModel<Customer> leerClientesDesdeCSV(String rutaArchivo) {
+    private DefaultComboBoxModel<Customer> loadCostumerFromCSV(String rutaArchivo) {
         DefaultComboBoxModel<Customer> customerModel = new DefaultComboBoxModel<>();
         customerModel.addElement(new Customer("", "Selecciona un cliente", "", "", 1, "")); //Elemento por defecto
 
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] valores = linea.split(";");
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] valores = line.split(";");
                 if (valores.length == 6) {
                     String id = valores[0];
                     String name = valores[1];
